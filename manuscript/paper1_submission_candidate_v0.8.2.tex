@@ -1,0 +1,708 @@
+\documentclass[preprint,12pt,authoryear]{elsarticle}
+
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{booktabs,tabularx,array,longtable}
+\usepackage{graphicx}
+\usepackage{lineno}
+\usepackage{microtype}
+\usepackage{xurl}
+\usepackage{hyperref}
+\setlength{\emergencystretch}{3em}
+
+\journal{Computers and Geotechnics}
+\graphicspath{{figures/}}
+\hypersetup{
+  hidelinks,
+  pdftitle={Rollback-consistent state transactions and auditable verification of an Abaqus multiphase poromechanics user element},
+  pdfauthor={Weiji Sun, Yangqi Ma, Bing Liang, Bo Liang}
+}
+
+\begin{document}
+\begin{frontmatter}
+
+\title{Rollback-consistent state transactions and auditable verification of an Abaqus multiphase poromechanics user element}
+
+\author[aff1]{Weiji Sun\corref{cor1}}
+\ead{sunweiji-1231@163.com}
+\author[aff1]{Yangqi Ma}
+\ead{15594667980@163.com}
+\author[aff1]{Bing Liang}
+\ead{lbwqx@163.com}
+\author[aff2]{Shi He}
+\ead{hs_ccteg@163.com}
+\author[aff1]{Bo Liang}
+\ead{15826269106@163.com}
+\cortext[cor1]{Corresponding author. Tel.: +86 139 4182 0145.}
+\affiliation[aff1]{organization={School of Mechanics and Engineering, Liaoning Technical University},
+                   addressline={No. 47 Zhonghua Road},
+                   city={Fuxin},
+                   state={Liaoning},
+                   postcode={123000},
+                   country={China}}
+\affiliation[aff2]{organization={China Coal Research Institute},
+                   city={Beijing},
+                   postcode={100013},
+                   country={China}}
+
+\begin{abstract}
+Nonlinear multiphysics user elements combine history-dependent variables, branch-dependent constitutive responses, and solver-driven trial evaluations. A converged endpoint alone therefore cannot reveal whether rejected calls contaminate physical history, whether a returned matrix differentiates the implemented residual, or whether numerical representation changes an audit result. This study presents an auditable verification framework for one frozen equal-order Q4 displacement--pressure--saturation Abaqus UEL, without proposing a new constitutive model. Six falsifiable conditions separate committed physical history, trial candidates, algorithmic quantities, and diagnostics. Source tracing and equal-state replay expose a capillary-reference cache whose value depends on rejected call history; moving that quantity to solver-managed state removes the identified path. A bidirectional ledger then links three residuals, nine matrix blocks, 48 state slots, units, and active branches. Lifecycle replay, blockwise and mixed directional differentiation, stable-active-set analysis, assembled-patch checks, and independent repetition are evaluated as distinct evidence layers. The strict binary64 mixed-direction record remains 36/39, while the three lower-clip cases are supported separately by an active-set oracle and binary128 differences. The predefined Newton-order criterion and a common local basin were not established, and those outcomes are retained rather than replaced by favorable subsets. The framework provides bounded evidence for rollback-consistent state ownership, traceability, and selected branch derivatives in the tested domain. Engineering qualification remains separate: equal-order stability, native-balance closure, mesh and time convergence, full-domain validity, and production readiness are not established.
+\end{abstract}
+
+\begin{keyword}
+rollback consistency \sep auditable verification \sep user-defined finite element \sep multiphase poromechanics \sep Jacobian verification \sep numerical reproducibility
+\end{keyword}
+
+\end{frontmatter}
+\linenumbers
+
+\section{Introduction}
+
+\subsection{Reliability challenges in nonlinear multiphysics user elements}
+
+Nonlinear multiphase poromechanics couples deformation, pore pressure, saturation-dependent transport, and history-dependent constitutive response across several numerical layers. Its continuum basis extends classical consolidation and poromechanics to partially saturated and multiphase settings \citep{biot1941,coussy2003,borja1995,borja2004}. A nominal time increment can include repeated Newton iterations, line searches, failed attempts, terminal calls, and cutbacks before the host solver accepts a new state. Calls made during this process are alternative trials originating from one committed beginning-of-increment state, rather than independent evaluations of unrelated configurations. Numerical credibility therefore depends on whether the user implementation obeys the host transaction as well as on whether it represents the intended equations.
+
+Classical constitutive algorithms distinguish the converged beginning state from an endpoint candidate. Ortiz and Popov separated integration accuracy, incremental consistency, and nonlinear stability for local updates \citep{ortiz1985}. Simo and Taylor showed that every return-mapping trial should be reconstructed from the converged beginning state and that the tangent must differentiate the discrete response used by the residual if the asymptotic Newton rate is to be retained \citep{simo1985}. Consistent-tangent construction and numerical differentiation of algorithmic constitutive updates were subsequently systematized for computational inelasticity \citep{miehe1996,simohughes1998,desouzaneto2008}. These results establish deterministic state transitions and residual-tangent compatibility. They do not by themselves prescribe rollback of physical memory privately owned by a compiled user extension.
+
+That distinction is consequential. Solver-managed state variables can be restored after a rejected attempt, whereas language-level static arrays, module variables, common blocks, or file-backed caches can survive rejection. If such persistence subsequently enters a residual or tangent, two calls with identical declared inputs can produce different outputs solely because they were preceded by different rejected histories. An implementation can remain finite and advance for many increments while its effective nonlinear residual is no longer a function of the declared state alone. This defect is categorically different from a declared quasi-Newton approximation: an approximate tangent changes a solution operator while preserving the residual, whereas hidden physical-state mutation changes the residual itself.
+
+\subsection{Why conventional verification is insufficient}
+
+Conventional implementation checks often emphasize successful termination, final displacement or pressure fields, and a small terminal residual. Those observations are necessary but do not determine whether a rejected trial modified hidden state, whether every active branch uses the derivative implied by its value path, whether a raw returned matrix contains nonphysical numerical terms, or whether a benchmark failure belongs to the implementation, the algebraic solver, or the reference itself. These questions require separate lifecycle, traceability, derivative, assembly, and benchmark-qualification evidence.
+
+Poromechanical coupling algorithms create a second and independent approximation layer. Reservoir-geomechanics studies have long compared fully coupled and sequential solution strategies \citep{settari1998,settari2001,dean2006}. Fixed-strain, fixed-stress, and related partitioned methods replace a monolithic solve with declared block iterations \citep{kim2011,castelletto2013,mikelic2013,white2016}. Their convergence, accuracy, optimization, multiscale extension, and parameter robustness depend on the stated model and splitting assumptions \citep{castelletto2015,dana2018,storvik2019,hong2020}. Block-factorization analyses relate such schemes to approximations of monolithic Schur complements \citep{white2016}. For nonlinear unsaturated or multiphase systems, L-schemes, modified Picard, Newton, and accelerated fixed-stress variants exchange local speed for robustness \citep{both2019}. A single flow solve followed by a single mechanics solve is not equivalent to a converged two-way fixed-stress iteration.
+
+The pressure variable transmitting multiphase effects to mechanics is another independent choice. Effective-stress and stress--saturation frameworks for unsaturated soils are model dependent and are tied to their constitutive assumptions \citep{nuth2007,coussy2010,sheng2008,zhou2012,sun2010}. Strong-capillarity analyses likewise demonstrate that an energy-compatible equivalent pore pressure can influence coupled stability \citep{kim2013}. These observations motivate, but do not uniquely select, the empirical weighting used by the present element. A defensible implementation must trace the declared pressure definition through the mechanics residual and every coupling derivative. Similarly, convergence of a fixed-stress outer iteration does not replace a spatial pressure-mode audit \citep{aronson2024}, and nested fixed-stress schemes with explicit inner and outer states do not automatically solve host rollback of user-owned physical memory \citep{correa2025}.
+
+\subsection{Objective and bounded contributions}
+
+The relevant gap is therefore cross-layer rather than constitutive novelty. Official Abaqus documentation defines the UEL arrays and identifies \texttt{SVARS} as solver-managed state for general nonlinear steps \citep{abaqus2026uel}, while classical consistent-tangent literature requires the matrix to differentiate the discrete response \citep{simo1985,miehe1996}. Neither statement alone verifies that private user memory is rollback safe, that every returned block differentiates the implemented residual, or that a locally accurate derivative yields a useful nonlinear basin. The objective is consequently not to certify a generally deployable solver, but to establish an auditable framework that can expose and bound these distinct implementation risks for one frozen UEL.
+
+Four bounded contributions are made. First, a rollback-consistent transaction protocol uses six falsifiable conditions to separate committed, trial, algorithmic, and diagnostic state. Second, source-extracted replay demonstrates rejected-history contamination by a capillary-reference cache and defines a solver-managed repair pattern; repaired-build Abaqus patch tests provide a separate, narrower host check. Third, an equation-to-code-state-Jacobian ledger links the weak equations, source routines, nine matrix blocks, 48 state slots, units, and branch rules. Fourth, an evidence-bounded workflow separates lifecycle replay, directional and active-set differentiation, assembled patch checks, Newton order, and local-basin geometry while retaining negative and inconclusive outcomes. The study is an auditable implementation-verification case, not a validation of a new geotechnical constitutive law.
+
+The scope is correspondingly narrow. The corrected physical derivative is supported only over registered smooth and stable-active-set P1 states. Equal-order field stability, native balance closure, mesh and time-step convergence, a documented engineering benchmark, a common Newton basin, and full-domain performance remain unestablished. These omissions are explicit resubmission gates rather than implied achievements.
+
+\section{Multiphase poromechanics UEL formulation}
+
+\subsection{Primary fields and phase variables}
+
+The four-node plane-strain element uses the primary fields
+
+\begin{equation}
+\mathbf{x}=\{\mathbf{u},p_w,S_n\},
+\end{equation}
+
+where $\mathbf{u}$ is solid displacement, $p_w$ is wetting-phase pressure, and $S_n$ is non-wetting-phase saturation. The wetting saturation is $S_w=1-S_n$. With residual saturations $S_{wr}$ and $S_{nr}$, the effective wetting saturation is evaluated as
+
+\begin{equation}
+S_e=\operatorname{clip}\left(
+\frac{S_w-S_{wr}}{1-S_{wr}-S_{nr}};\,
+\varepsilon,1-\varepsilon
+\right),
+\end{equation}
+
+The clipping operation is part of the declared numerical closure. In its smooth interior, $\partial S_e/\partial S_n=-1/(1-S_{wr}-S_{nr})$; on an active endpoint clip, the derivative of the clipped argument is zero. Exact switching points are treated as nonsmooth and are not included in smooth central-difference claims.
+
+The capillary and relative-permeability paths use the implemented Brooks--Corey-type power laws \citep{brookscorey1964},
+
+\begin{equation}
+p_c=p_b\left(S_e^{-1/\lambda_{BC}}-1\right),
+\qquad
+k_{rw}=S_e^{n_w},
+\qquad
+k_{rn}=(1-S_e)^{n_n}.
+\end{equation}
+
+Effective-saturation descriptions of retention and hydraulic conductivity have several established forms, including the widely used closed-form model of \citet{vangenuchten1980}. The power laws above are the frozen engineering choices of the audited element rather than a calibration claim for that or any other retention family. Analytical derivatives are evaluated on the same active branch as the corresponding values. The present study reports these relations exactly as implemented and does not claim that their parameterization or calibration range transfers beyond the frozen benchmark.
+
+\subsection{Equivalent pressure and mechanical coupling}
+
+The implementation defines
+
+\begin{equation}
+\chi(S_e)=1-S_e,
+\qquad
+p_{eq}=p_w+\chi(S_e)p_c.
+\end{equation}
+
+Because $p_n=p_w+p_c$, this can also be written as $p_{eq}=S_ep_w+(1-S_e)p_n$. On a smooth active branch,
+
+\begin{equation}
+\frac{\partial p_{eq}}{\partial p_w}=1,
+\qquad
+\frac{\partial p_{eq}}{\partial S_n}
+=\frac{\partial\chi}{\partial S_n}p_c
++\chi\frac{\partial p_c}{\partial S_n}.
+\end{equation}
+
+The value and first derivatives follow one branch-aware code path. An independent audit found implementation-level derivative agreement, but this establishes algebraic consistency only. The relation is retained as a Bishop-type engineering closure and is not substituted for thermodynamically structured or effective-stress formulations in the literature \citep{nuth2007,coussy2010,borja2004}. The present evidence does not provide a project-specific Helmholtz free energy, unique work-conjugate pressure, or dissipation proof; rollback-safe ownership therefore must not be conflated with thermodynamic consistency.
+
+The frozen mechanics model is isotropic small-strain plane strain with engineering shear strain. With tensile stress positive,
+
+\begin{equation}
+\boldsymbol\sigma'=\mathbf{D}\boldsymbol\varepsilon,\qquad
+\mathbf{D}=\begin{bmatrix}
+\lambda+2G & \lambda & 0\\
+\lambda & \lambda+2G & 0\\
+0&0&G
+\end{bmatrix},
+\end{equation}
+
+where $\lambda=E\nu/[(1+\nu)(1-2\nu)]$ and $G=E/[2(1+\nu)]$. The implemented mechanics residual is
+
+\begin{equation}
+\mathbf{R}_u=\int_{\Omega_e}\mathbf{B}^{T}\boldsymbol\sigma'\,d\Omega
+-\int_{\Omega_e}\mathbf{B}^{T}\alpha p_{eq}\mathbf{m}\,d\Omega,
+\qquad \mathbf{m}=(1,1,0)^T.
+\end{equation}
+
+Thus $K_{uu}=\int B^TDB\,d\Omega$, while $K_{up}$ and $K_{us}$ differentiate the unchanged equivalent-pressure force with respect to $p_w$ and $S_n$. These are code-level definitions of the audited element, not a calibration or validation of the equivalent-stress closure.
+
+\subsection{Pressure and saturation residuals}
+
+With $N_i$ denoting a Q4 test function, $\mathbf{m}=(1,1,0)^T$, and superscripts $k$ and $n$ denoting the current trial and beginning-of-increment committed states, respectively, the implemented pressure residual is
+
+\begin{equation}
+R_{p,i}=\int_{\Omega_e}
+\left[
+N_i c_{p,\mathrm{impl}}\frac{p_w^k-p_w^n}{\Delta t}
++N_i\alpha\frac{\varepsilon_v^k-\varepsilon_v^n}{\Delta t}
++\nabla N_i\cdot(\lambda_w\nabla p_w^k)
+\right]d\Omega,
+\end{equation}
+
+where $c_{p,\mathrm{impl}}=\texttt{PROPS(4)}$ and $\lambda_w=Kk_{rw}/\mu_w$. The legacy source annotation for \texttt{PROPS(4)} is inconsistent with its dimensional role in the discrete equation; the paper therefore reports it only as the implemented pressure-storage coefficient and assigns no independent calibrated-parameter provenance. The pressure assembler contains no explicit well or boundary source term; such loading must be traced to the input deck rather than attributed to the UEL residual.
+
+The saturation assembler optionally evaluates a guarded trial value
+
+\begin{equation}
+S_n^{use}=\operatorname{clip}_{[0,1]}
+\left[S_n^n+\beta_S(S_n^k-S_n^n)\right]
+\end{equation}
+
+and assembles
+
+\begin{equation}
+\begin{aligned}
+R_{s,i}=\int_{\Omega_e}\Bigg[
+&N_i\phi\rho_n\frac{S_n^{use}-S_n^n}{\Delta t}
++N_i\rho_n\beta_\phi S_n^{use}
+\frac{\varepsilon_v^k-\varepsilon_v^n}{\Delta t}\\
+&+\nabla N_i\cdot\left\{\lambda_n
+\left[\nabla p_w^k+p_c'(S_n^k)\nabla S_n^k\right]\right\}
+\Bigg]d\Omega,
+\end{aligned}
+\end{equation}
+
+where
+
+\begin{equation}
+\lambda_n=\frac{\rho_nKk_{rn}}{\mu_n},
+\qquad
+\frac{\partial\lambda_n}{\partial S_n}
+=\frac{\rho_nK}{\mu_n}\frac{\partial k_{rn}}{\partial S_n}.
+\end{equation}
+
+The storage/strain path and the closure/flux path deliberately retain their distinct saturation values. Linearization must therefore differentiate each declared path rather than merge them into a numerically convenient surrogate.
+
+\subsection{Stress-dependent permeability, parameters, and numerical controls}
+
+The scalar absolute permeability uses the mean in-plane effective stress
+$\sigma'_m=(\sigma'_{xx}+\sigma'_{yy})/2$ and is evaluated as
+
+\begin{align}
+K_{raw} &= K_0\exp\!\left[a_\sigma(\sigma'_m-\sigma'_0)\right]s_{cb},\\
+s_{cb} &= 1+a_{cb}(CB_{GP}-CB_0),\\
+K &= \operatorname{clip}(K_{raw};K_{min},K_{max}).
+\end{align}
+
+The registered profile sets $a_{cb}=0$, so $s_{cb}=1$. On the interior exponential branch,
+$\partial K/\partial\sigma'_m=a_\sigma K_{raw}$; on an active permeability bound the derivative of the clipped value is zero, and exact switching points are excluded. The value is scalar and isotropic; no permeability tensor or anisotropy claim is made.
+
+Table~\ref{tab:parameters} reports every input used by the tested single-element harness. Parameters 23--27 are disabled diagnostic or freeze switches and are listed in Supplementary Table~S1. For the present paper, \texttt{PROPS(4)} is defined uniquely by its implemented residual and tangent role as an implementation-level pressure-storage coefficient $c_{p,\mathrm{impl}}$ with unit Pa$^{-1}$. The legacy source annotation ``dimensionless'' is treated as incorrect metadata, not as an alternative definition. No calibration source, constitutive identification, or sensitivity study is available, so the coefficient is not presented as a validated material property.
+
+\small
+\begin{longtable}{@{}r p{0.18\textwidth} p{0.16\textwidth} p{0.16\textwidth} p{0.27\textwidth}@{}}
+\caption{Registered P1 input parameters. A dash denotes dimensionless.}\label{tab:parameters}\\
+\toprule
+No. & Symbol or role & Value & Unit & Evidence boundary\\
+\midrule
+\endfirsthead
+\toprule
+No. & Symbol or role & Value & Unit & Evidence boundary\\
+\midrule
+\endhead
+1 & $E$ & $2.50\times10^{10}$ & Pa & isotropic plane-strain elasticity\\
+2 & $\nu$ & 0.300 & -- & isotropic plane-strain elasticity\\
+3 & $\alpha$ & 1.00 & -- & equivalent-pressure coupling\\
+4 & $c_{p,\mathrm{impl}}$ / STORW & $1.00\times10^{-6}$ & Pa$^{-1}$ & implementation-level pressure-storage coefficient; calibration and sensitivity pending\\
+5 & $\mu_w$ & $1.00\times10^{-3}$ & Pa s & wetting mobility\\
+6 & $\rho_n$ & 700 & kg m$^{-3}$ & non-wetting mass balance\\
+7 & $\mu_n$ & $1.00\times10^{-3}$ & Pa s & non-wetting mobility\\
+8 & $S_{wr}$ & 0.200 & -- & residual wetting saturation\\
+9 & $S_{nr}$ & 0.0500 & -- & residual non-wetting saturation\\
+10 & $p_b$ & $1.00\times10^{4}$ & Pa & entry-pressure parameter\\
+11 & $\lambda_{BC}$ & 2.00 & -- & Brooks--Corey exponent\\
+12 & $n_w$ & 2.00 & -- & wetting relative-permeability exponent\\
+13 & $n_n$ & 2.00 & -- & non-wetting relative-permeability exponent\\
+14 & $\beta_\phi$ & $1.00\times10^{-2}$ & -- & strain--saturation coupling coefficient\\
+15 & debug seed & 0.100 & -- & disabled; no physical role\\
+16 & $K_0$ & $6.00\times10^{-12}$ & m$^2$ & reference absolute permeability\\
+17 & $\sigma'_0$ & 0 & Pa & reference mean effective stress\\
+18 & $a_\sigma$ & 0 or $1.00\times10^{-8}$ & Pa$^{-1}$ & state-specific stress sensitivity\\
+19 & $CB_0$ & 0 & -- & disabled coupling baseline\\
+20 & $a_{cb}$ & 0 & -- & disabled coupling sensitivity\\
+21 & $K_{min}$ & $1.00\times10^{-20}$ & m$^2$ & lower permeability bound\\
+22 & $K_{max}$ & $1.00\times10^{-8}$ & m$^2$ & upper permeability bound\\
+\bottomrule
+\end{longtable}
+\normalsize
+
+Material relations and phase balances belong to the frozen engineering model. Tangent scaling, matrix-only diagonal terms, limiter controls, and increment controls belong to the numerical implementation. M1 contains the stress-dependent permeability value but omits its displacement derivative in the flow rows, uses a 0.75 mechanics-coupling tangent scale, and differentiates selected saturation paths incompletely. M2a changes only those registered derivatives; the residual, closure values, and physical state are parity controls.
+
+\section{Rollback-consistent state-ownership architecture}
+
+\subsection{Declared state classes}
+
+Let $t_n$ denote the beginning of a candidate increment and let $\mathbf{h}_n$ be the committed physical history supplied by the host. One element call evaluates
+
+\begin{equation}
+\mathcal{F}(\mathbf{x}^{(k)};\mathbf{h}_n,\boldsymbol\theta)
+=\left(\mathbf{R}^{(k)},\mathbf{J}^{(k)},
+\widehat{\mathbf{h}}^{(k)},\mathbf{d}^{(k)}\right),
+\end{equation}
+
+where $\boldsymbol\theta$ is immutable configuration, $\widehat{\mathbf{h}}^{(k)}$ is a candidate end state, and $\mathbf{d}^{(k)}$ contains physically inert diagnostics. Four state classes are distinguished.
+
+
+\begin{table}[!htbp]
+\centering
+\caption{State classes and permitted ownership lifetimes.}
+\label{tab:1}
+\small
+\begin{tabularx}{\textwidth}{@{}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Class & Meaning & Permitted lifetime \\
+\midrule
+$C_n$ & committed physical history & Solver-managed and rollback capable \\
+$T_k$ & current Newton, line-search, or cutback trial & Call-local or candidate solver-managed state \\
+$A_k$ & declared algorithmic iteration state & Explicitly versioned and reset by the algorithm \\
+$D_k$ & counters, logs, and diagnostics & Persistent only if no reverse path to residual, tangent, or physical history exists \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+This classification extends the classical beginning-state/candidate-state distinction by addressing memory that the host cannot automatically restore. In the documented Abaqus/Standard UEL interface, \texttt{RHS}, \texttt{AMATRX}, and \texttt{SVARS} are user-defined outputs, and in general nonlinear steps \texttt{SVARS} enters with beginning-of-increment values and may be returned as an end-of-increment candidate \citep{abaqus2026uel}. A \texttt{KINC=0} call is documented as zero-increment output and cannot be used to commit physical history. These interface facts motivate the ownership contract; the stronger claim that rejected call orders leave the implementation invariant is established only for the explicitly tested paths, not inferred from documentation.
+
+The source-derived per-Gauss-point inventory is listed in Supplementary Table~S3. Slots 1--14 are physical or closure candidates; slots 15--32 are conditionally written mechanics diagnostics; slots 33--45 are a conditionally written output mirror with provenance fields; and only slots 46--48 remain reserved. Static use-def tracing found no read from slots 15--45 into \texttt{RHS}, \texttt{AMATRX}, or slots 1--14, but these quantities are nevertheless solver-managed diagnostic state and are subject to rollback, zero-increment, and restart noninterference requirements. Private \texttt{SAVE}, \texttt{DATA}, module, common-block, or file-backed values may be diagnostic only when no reverse physical path exists.
+
+\subsection{Rollback-consistency conditions}
+
+\textbf{RC1: committed-state immutability.} A trial call may not alter $\mathbf{h}_n$ before acceptance.
+
+\textbf{RC2: call-history invariance.} Identical $\mathbf{x}$, $\mathbf{h}_n$, and $\boldsymbol\theta$ must produce equivalent physical outputs after different rejected trial histories.
+
+\textbf{RC3: rejection invariance.} Rejecting $\widehat{\mathbf{h}}^{(k)}$ leaves the committed state equal to $\mathbf{h}_n$.
+
+\textbf{RC4: acceptance atomicity.} A candidate becomes $\mathbf{h}_{n+1}$ only through the host acceptance event; the user element does not maintain a competing private commit.
+
+\textbf{RC5: terminal-call noninterference.} Zero-increment, output-only, and terminal calls may not change the next physical residual or committed history.
+
+\textbf{RC6: serialization equivalence.} When restart is claimed, serialization and restoration of the committed state must reproduce the uninterrupted update within a frozen envelope.
+
+Equivalence under RC2 and RC6 may be bitwise, numerical, or engineering-level, but the envelope and compared fields must be fixed before the test. A finite result is a prerequisite, not an equivalence criterion.
+
+\subsection{Single-source principle and persistent-state inventory}
+
+Every history variable that can affect a residual, tangent, or subsequent physical state must have one authoritative committed source,
+
+\begin{equation}
+\operatorname{source}(h_i^n)=\operatorname{SVARS}(s_i).
+\end{equation}
+
+If a solver-managed slot and a writable static cache represent the same quantity, update order becomes hidden state and RC2 is generally lost. Persistent storage remains permissible for immutable configuration or diagnostics without a reverse physical path. Explicit iterative history, such as acceleration vectors, belongs to $A_k$ and requires a declared version and reset rule.
+
+The element allocates 48 state slots per Gauss point and 192 per element. Slots 1--14 contain primary, closure, stress, CAP\_\allowbreak{}REF, and validity candidates. Slots 15--32 are populated only by the registered mechanics-debug gate, whereas slots 33--45 mirror selected fields and their source, time, and increment metadata when the output-source gate is active. Slots 46--48 are initialized to zero and otherwise unused. A source-level audit found no reverse path from slots 15--45 into the physical residual, matrix, or slots 1--14; this static result does not replace dynamic output-on/off, rejection, zero-increment, and restart checks for every flag combination. Static scanning also found no remaining active trial-updated physical history in explicit \texttt{SAVE}, \texttt{DATA}, module, or file storage after the CAP\_\allowbreak{}REF repair. Absence of a known cache is not proof of all-path rollback or parallel safety.
+
+\subsection{CAP\_\allowbreak{}REF counterexample and bounded repair}
+
+The audited baseline contained \texttt{CAP\_\allowbreak{}REF\_\allowbreak{}EGP} and \texttt{CAP\_\allowbreak{}REF\_\allowbreak{}INIT} as Fortran \texttt{SAVE} arrays. A trial could initialize or overwrite the capillary reference using the current $p_{eq}-p_w$, after which the saved value entered the equivalent-pressure force and mechanical residual. Abaqus could restore \texttt{SVARS} after rejection but could not restore those private arrays. The path therefore violated RC2 and RC3.
+
+The repaired implementation stores CAP\_\allowbreak{}REF and its valid flag in Gauss-point \texttt{SVARS(13:14)} and reads the committed input through one selector. Shared CAP\_\allowbreak{}REF keys subsequently agreed exactly in the bounded lifecycle tests. This supports the statement that the identified path was made rollback-safe. It does not prove that all state slots, static objects, host terminal paths, or parallel diagnostic operations are safe.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/Figure_1_rollback_transaction.pdf}
+\caption{Host rollback restores solver-managed committed state but cannot restore a private trial-updated physical cache. Moving the identified capillary reference into solver-managed state removes that path; the diagram does not imply universal state safety.}
+\label{fig:1}
+\end{figure}
+
+\section{Discrete formulation and auditable traceability}
+
+\subsection{Element ordering and residual contract}
+
+The Q4 element has 16 degrees of freedom, ordered node-wise as
+
+\begin{equation}
+\{u_x,u_y,p_w,S_n\}_a,\qquad a=1,\ldots,4.
+\end{equation}
+
+The corresponding row sets are $\mathcal{I}_u=\{1,2,5,6,9,10,13,14\}$, $\mathcal{I}_p=\{3,7,11,15\}$, and $\mathcal{I}_s=\{4,8,12,16\}$. The internal element residual is
+
+\begin{equation}
+\mathbf{R}=\begin{bmatrix}\mathbf{R}_u\\\mathbf{R}_p\\\mathbf{R}_s\end{bmatrix},
+\qquad
+\mathbf{J}_{phys}=\frac{\partial\mathbf{R}}{\partial\mathbf{x}}
+=\begin{bmatrix}
+\mathbf{K}_{uu}&\mathbf{K}_{up}&\mathbf{K}_{us}\\
+\mathbf{K}_{pu}&\mathbf{K}_{pp}&\mathbf{K}_{ps}\\
+\mathbf{K}_{su}&\mathbf{K}_{sp}&\mathbf{K}_{ss}
+\end{bmatrix}.
+\end{equation}
+
+The host convention is RHS=-R and AMATRX=K. Consequently, the registered directional identity is
+
+\begin{equation}
+D(\mathrm{RHS})[\mathbf{d}]\simeq-\mathbf{J}_{phys}\mathbf{d}.
+\end{equation}
+
+The sign was frozen globally before directional testing; it was not selected independently for individual blocks, states, or perturbation sizes.
+
+\subsection{Bidirectional traceability}
+
+Traceability was established in both directions: from each equation term to its code implementation and from every returned block or state slot back to a declared equation or numerical role. The principal mapping is summarized below.
+
+
+\begin{table*}[!htbp]
+\centering
+\caption{Compact traceability overview. The auditable term--routine--block--state--unit--test ledger is Supplementary Table S2.}
+\label{tab:2}
+\small
+\begin{tabularx}{\textwidth}{@{}*{4}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Equation responsibility & Residual rows & Principal derivatives & State or interface anchor \\
+\midrule
+Effective-stress equilibrium and equivalent-pressure force & $R_u$ & $K_{uu},K_{up},K_{us}$ & RHS, AMATRX, effective-stress slots, CAP\_\allowbreak{}REF \\
+Wetting storage, volumetric-strain coupling, and wetting flux & $R_p$ & $K_{pu},K_{pp},K_{ps}$ & committed $p_w$, $\varepsilon_v$, $K$, and closure values \\
+Non-wetting storage, strain coupling, and pressure/capillary flux & $R_s$ & $K_{su},K_{sp},K_{ss}$ & committed $S_n$, branch-aware $S_n^{use}$, $p_c$, and mobility \\
+Candidate accepted-state export & no new residual & no physical derivative & solver-managed SVARS, accepted-call provenance \\
+Matrix stabilization and diagnostics & no physical residual unless paired & $J_{num}$ or nonphysical output only & AMATRX, counters, CSV/FIL writers \\
+\bottomrule
+\end{tabularx}
+\end{table*}
+
+The completed RP/RS audit resolved the earlier pressure- and saturation-equation tracing gaps. It also identified where a matrix term had no paired physical residual and where a value path had been differentiated incompletely. This distinction prevents a returned nonzero entry from being treated as evidence that the corresponding equation derivative is complete.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/Figure_2_traceability.pdf}
+\caption{Bidirectional traceability links equation terms, residual rows, physical and numerical matrix blocks, state ownership and host arrays. Raw returned-matrix entries are not automatically physical derivatives.}
+\label{fig:2}
+\end{figure}
+
+\subsection{Branch-aware value-and-derivative paths}
+
+The corrected implementation uses stateless value-and-derivative paths for stress-dependent permeability, equivalent pressure, capillary pressure, relative permeability, and the guarded saturation used by storage and strain terms. A helper returns a value, its derivative on the active branch, and a branch identifier. The residual and tangent therefore share the same clipping, limiter, and bound decisions. This fixed-active-set derivative is distinct from a generalized derivative at a switching point, consistent with the broader nonsmooth-Newton and active-set distinction \citep{qisun1993,hintermuller2002}. No trial-dependent physical SAVE, DATA, module, or file cache was added.
+
+For $K$ in the interior exponential branch,
+
+\begin{equation}
+\frac{\partial K}{\partial\sigma'_m}=a_\sigma K,
+\qquad
+\frac{\partial K}{\partial u_j}
+=\frac{\partial K}{\partial\sigma'_m}
+\frac{\partial\sigma'_m}{\partial u_j},
+\end{equation}
+
+whereas an active lower or upper permeability bound has zero derivative of the clipped value. For the saturation equation, $K_{ss}$ differentiates the declared storage-use path, strain-saturation term, mobility, $p_c'\nabla S_n$, and the $p_c''N_j\nabla S_n$ contribution. Stable active branches are tested as classical derivatives; exact switching surfaces are retained as nonsmooth boundaries rather than assigned a post-hoc central derivative.
+
+\subsection{Physical and numerical matrices}
+
+For audit purposes the returned matrix is decomposed as
+
+\begin{equation}
+\mathbf{J}_{returned}=\mathbf{J}_{phys}+\mathbf{J}_{num},
+\qquad \mathbf{J}_{num}=10^{-12}\mathbf{I}_{16}.
+\end{equation}
+
+The scalar value $10^{-12}$ is the legacy coefficient written to every diagonal entry in the unscaled physical-coordinate matrix. Because displacement, pressure, and saturation columns and the three residual row families have different units, this expression is not dimensionally homogeneous and is not invariant to a change of units. It is therefore neither a physical stabilization law nor evidence that the equal-order Q4 interpolation is stable. With variable and residual scaling matrices $\mathbf{X}$ and $\mathbf{W}$, its actual scaled representation is
+
+\begin{equation}
+\widehat{\mathbf{J}}_{num}=\mathbf{W}(10^{-12}\mathbf{I}_{16})\mathbf{X},
+\end{equation}
+
+which is generally not a scalar identity. Directional physical-consistency tests use
+$\mathbf{J}_{phys}=\mathbf{J}_{returned}-\mathbf{J}_{num}$ because the guard has no paired residual term. Abaqus, however, receives $\mathbf{J}_{returned}$. Consequently, verification of $\mathbf{J}_{phys}$ cannot be promoted to a statement about the Newton behavior, unit robustness, or field stability of the host solve. Raw AMATRX is retained in parity and sensitivity records, and the failed nonlinear gates are reported separately.
+
+\section{Algorithm hierarchy}
+
+\subsection{M0: legacy hidden-state baseline}
+
+M0 denotes the implementation in which the CAP\_\allowbreak{}REF reference can be updated in private persistent memory during a trial. Because rejected calls can then change a later residual at identical declared inputs, M0 does not define a rollback-consistent residual map. It is retained as a falsifying counterexample, not as a production comparator.
+
+\subsection{M1: rollback-safe quasi-Newton baseline}
+
+M1 moves the identified physical reference into solver-managed committed state while retaining the original mixed tangent approximations. In particular, its mechanics coupling uses a 0.75 tangent scale, its stress-dependent permeability value path lacks the corresponding displacement derivatives in flow blocks, and its saturation block freezes or omits selected coefficient derivatives. M1 is therefore a declared rollback-safe quasi-Newton baseline. Its residual is held fixed while the mismatch of each registered block is measured.
+
+\subsection{M2a: branchwise physical-Jacobian candidate}
+
+M2a preserves the M1 physical residual and lifecycle repair while correcting derivatives on smooth and stable active branches. It restores the full equivalent-pressure mechanics derivatives, adds the stress-permeability chain to $K_{pu}$ and $K_{su}$, completes the declared $K_{ss}$ branchwise derivative, and separates $K_{pp}^{phys}$ from the unpaired diagonal guard. The term physical-Jacobian candidate is used deliberately: strong P1 directional evidence does not establish universal Newton behavior, exact-switching differentiability, full-domain validity, or equivalence of raw AMATRX and $\mathbf{J}_{phys}$.
+
+\subsection{Fair-comparison contract}
+
+Comparisons among implemented levels use identical residuals, committed states, material data, time semantics, variable scaling, constraints, and branch definitions. Changes in RHS, closure values, or physical candidate SVARS are hard failures rather than admissible algorithmic improvements. Matrix differences are accepted only when they match the preregistered derivative ledger. This contract separates lifecycle repair, Jacobian correction, and nonlinear-solver behavior.
+
+\section{Auditable verification framework}
+
+\subsection{Orthogonal verification dimensions}
+
+The framework progresses from state transactions through equation-to-code traceability, branchwise derivatives, assembled behavior, benchmark qualification, and only then engineering deployment. Each layer asks a different falsifiable question and has an independent evidence boundary. Verification is therefore organized into dimensions that cannot substitute for one another, following the broader distinction between code verification, solution verification, validation, and numerical-error assessment \citep{roy2005,oberkampf2010}:
+
+\begin{enumerate}
+\item \textbf{Lifecycle safety:} identical declared states must be independent of rejected-call history, terminal calls, and accepted-state serialization within a frozen envelope.
+\item \textbf{Residual and state parity:} a tangent-only correction must leave RHS, closure values, and physical candidate state unchanged.
+\item \textbf{Directional Jacobian consistency:} block and full-matrix products are compared with directional residual derivatives over registered states, directions, and perturbation scales.
+\item \textbf{Patch and assembled balance:} multi-element modes test interpolation, assembly, interior balance, and coupled responses.
+\item \textbf{Nonlinear convergence behavior:} preregistered Newton histories, empirical order, and local-basin maps test the solver consequence of the assembled operator.
+\item \textbf{Full-domain accepted-state provenance:} coverage, conservation, non-perturbation, repeatability, and parallel diagnostic safety must be established separately.
+\end{enumerate}
+
+A pass in one dimension is not promoted to another. In particular, finite output is not lifecycle safety, directional agreement is not a common Newton basin, and a single-element patch is not an engineering production benchmark.
+
+\subsection{Lifecycle and state-transaction tests}
+
+Lifecycle tests include equal-state replay, permuted rejected trials, clean versus forced-cutback histories, zero-increment and terminal-call insertion, output-on/output-off comparison, restart equivalence, and independent-process repetition. Physical-state comparison is distinct from diagnostic-writer comparison: a parallel output race can invalidate provenance without changing the single-element physical residual.
+
+\subsection{Registered geometry, states, directions, and thresholds}
+
+The elemental derivative tests use the unit square with nodes $(0,0)$, $(1,0)$, $(1,1)$, and $(0,1)$, four $2\times2$ Gauss points, unit thickness, and $\Delta t=60$ s. Node-wise unknowns are $(u_x,u_y,p_w,S_n)$. The three affine trial states are
+
+\noindent $I0$: $u_x=10^{-6}x$, $u_y=-5\times10^{-7}y$,
+$p_w=1.20\times10^7+10^3x+5\times10^2y$, and
+$S_n=0.25+10^{-3}x+5\times10^{-4}y$.
+
+\noindent $I1$: $u_x=10^{-5}x+2\times10^{-6}y$, $u_y=-8\times10^{-6}y$,
+$p_w=1.20\times10^7+2\times10^5x-10^5y$, and
+$S_n=0.30+5\times10^{-3}x$.
+
+\noindent $I2$: $u_x=5\times10^{-4}x+10^{-4}y$,
+$u_y=-3\times10^{-4}y+5\times10^{-5}x$,
+$p_w=1.20\times10^7+2.5\times10^5x-1.5\times10^5y$, and
+$S_n=0.25+0.12x+0.04y$.
+
+Characteristic variable scales are $X_u=10^{-5}$ m, $X_p=10^7$ Pa, and $X_s=10^{-1}$. The three 16-component mixed directions M1--M3 are normalized only in these scaled coordinates and are tabulated without rounding in Supplementary Table~S4 and the machine-readable input. Central differences retain all eleven registered perturbation levels,
+\begin{multline}
+h\in\{10^{-2},3\times10^{-3},10^{-3},3\times10^{-4},10^{-4},3\times10^{-5},\\
+10^{-5},3\times10^{-6},10^{-6},3\times10^{-7},10^{-7}\}.
+\end{multline}
+
+The integrated nonzero-response gate is relative $L_2\le10^{-5}$ with cosine similarity at least 0.99999; registered null responses require scaled derivative norm, matrix-vector norm, and mismatch norms no greater than $10^{-10}$. Independent-process normalized difference is at most $10^{-13}$. Branch-crossing points remain in the tables but cannot support a smooth derivative claim.
+
+The assembled patch is the $[0,2]\times[0,2]$ square subdivided into four unit Q4 elements with nine nodes. The Newton benchmarks use manufactured discrete loads $\mathrm{RHS}(x_\star)$, so the target root is known without changing the residual. N1 uses state I1, direction M2, a primary scaled offset 0.75, and a near-root offset 0.15; N2 uses I2, M3, 1.00, and 0.20. Local DOFs $\{1,2,3,4,6\}$ are fixed and $\{5,7,8,9,10,11,12,13,14,15,16\}$ are free. The Newton gate requires at least five residual states, three consecutive empirical orders $q\ge1.8$, a quadratic-constant ratio no greater than 10, final scaled residual $\le10^{-12}$, and root error $\le10^{-10}$ without globalization or branch crossing. Complete vectors and committed states are supplied in the reproducibility package.
+
+\subsection{Directional derivative protocol}
+
+For residual block $R_a$ and variable block $x_b$, the registered central difference is
+
+\begin{equation}
+D_hR_a[\mathbf{d}_b]
+=\frac{R_a(\mathbf{x}+h\mathbf{d}_b)-R_a(\mathbf{x}-h\mathbf{d}_b)}{2h}.
+\end{equation}
+
+Each perturbation begins from the same committed state and discards its candidate state. Three deterministic directions and 11 perturbation levels from $10^{-2}$ to $10^{-7}$ are retained. Smooth nonzero responses use relative error and cosine gates; null responses use scaled absolute gates. Branch-crossing records are retained but excluded from smooth central-difference claims. Independent-process repetition is part of the acceptance condition. The analytical oracle is implemented independently of the assembled matrix, reflecting the general principle that derivative generation and verification should not share the same computational path \citep{griewank2008}.
+
+Binary64 differences remain the primary smooth-core numerical test. A derivative oracle provides an independent analytical active-set path when hard clipping produces cancellation-limited differences, and binary128 arithmetic is used as supporting resolution evidence. Neither high precision nor an active-set oracle makes an exact switching point differentiable.
+
+\subsection{Patch, Newton-order, and basin tests}
+
+The assembled 2 \ensuremath{\times} 2 Q4 patch includes rigid, affine mechanics, pressure, saturation, and mixed modes. Rollback sequences explicitly reject candidate state before replaying the accepted path. Newton-order benchmarks use manufactured discrete roots and fixed constraints, scales, initial offsets, and stopping rules. When those histories did not contain the required asymptotic segments, the failure was preserved and followed by resolution and local-map audits rather than relabelled as convergence.
+
+Local-basin tests sample registered direction families, signs, and amplitudes in binary64 and binary128. Persistent entry requires the full fixed-band criterion, branch preservation, operator and decomposition closure, repeatability, and finite values. A direction without a registered entry is not automatically evidence of a Jacobian defect; projection, near-null alignment, manufactured-load mapping, nonlinear remainder, branch geometry, and resolution are audited as competing explanations.
+
+\subsection{Output-provenance boundary}
+
+Accepted-state output requires solver-managed record identity, complete element/Gauss-point coverage, finite fields, non-perturbation and same-build repetition. Diagnostic trial-call files do not satisfy that contract. A later diagnostic-only campaign established exact sharded writing for the registered single-thread case but quarantined the parallel trial-call CSV route rather than validating it. Subsequent record-route studies are summarized as infrastructure limitations in Supplementary Table S6; they do not supply a full-domain result and are not required for the present lifecycle and Jacobian claims.
+
+
+\begin{table}[!htbp]
+\centering
+\caption{Outcome matrix for the layered verification chain.}
+\label{tab:3}
+\small
+\begin{tabularx}{\textwidth}{@{}*{3}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Evidence layer & Positive result retained & Limitation retained \\
+\midrule
+State transaction & Identified CAP\_\allowbreak{}REF path passes bounded replay and parity after solver-managed repair & No all-state or all-host-path claim \\
+Six-block baseline & Residual is deterministic and individual block behavior is quantified & Matrix remains mixed quasi-Newton \\
+Branchwise derivatives & Smooth-core six-block, nine-block and mixed directions pass & Strict active-branch record remains 36/39 \\
+Active-set supplement & Independent oracle and binary128 differences support three lower-clip derivatives & Exact switching is excluded \\
+Patch and nonlinear tests & Available run1 patch/replay/conditioning gates pass & Complete patch/run2 and Newton-order gates are not established \\
+Local basin & Persistent entry occurs in 23/26 combinations & No common radius; three directions remain mixed or unresolved \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Verification evidence and failure-aware results}
+
+Positive, negative, and inconclusive outcomes are reported in the order of the verification hierarchy. A result is promoted only within the layer exercised by its registered test; later failures do not erase earlier local evidence, and earlier passes do not substitute for benchmark qualification.
+
+\subsection{State-transaction counterexample and bounded repair}
+
+Static tracing and source-extracted standalone equal-declared-state replay established the CAP\_\allowbreak{}REF mechanism as a state-transaction defect: a rejected trial changed a later residual at identical declared inputs in the unsafe baseline. The component-wise replay records are distributed as machine-readable evidence. After CAP\_\allowbreak{}REF and its validity flag were moved to \texttt{SVARS(13:14)}, the same-state comparison was exact and all 300 shared CAP\_\allowbreak{}REF keys agreed in the bounded standalone parity experiment. This demonstrates repair of the identified code path in the replay model; it is not, by itself, a replayable Abaqus-host before/after experiment.
+
+A repaired-build Abaqus patch supplied complementary host evidence. The clean and forced-cutback paths each contained 19 accepted rows, and the latter retained six rejected rows. Their maximum scaled accepted-state wetting-pressure difference was $5.66\times10^{-10}$, below the predefined $10^{-8}$ envelope, and the maximum reported nodal displacement difference was $4.65\times10^{-40}$ m. Output-on/off comparisons and the registered restart path were exact for the reported state records. Because the unsafe source, raw solver \texttt{.sta/.msg/.dat} files, and an isomorphic before/after host run are not all retained, this patch supports repaired-build bounded behavior but does not independently reproduce the causal counterexample.
+
+Physical-state evidence and diagnostic I/O evidence diverged under parallel execution. The 14-thread physical result remained within its registered envelope, but the trial-call diagnostic files showed duplicate or misplaced headers. A later writer-isolation campaign passed exact single-thread sharding and deterministic merge gates; the parallel trial-call route was ultimately disabled at launcher level rather than shown to be non-perturbing. This distinction leaves the repaired physical path supported by the bounded lifecycle tests while excluding parallel diagnostic CSV and full-domain accepted-state export from the present claim.
+
+\subsection{Rollback-safe quasi-Newton baseline as a controlled comparator}
+
+The six-block baseline audit evaluated six flow-related blocks over three states, three directions, and 11 perturbation levels, producing 594 retained records per independent run. The two processes were exactly reproducible. $K_{ps}$ was classified as numerically consistent over the registered domain. $K_{pu}$ and $K_{su}$ confirmed the omission of the stress-dependent permeability chain. $K_{ss}$ remained a bounded approximation because storage-use, mobility, capillary-curvature, and branch derivatives were incomplete. The original $K_{pp}$ mismatch was bounded by the matrix-only diagonal guard, whose characteristic product was $10^{-12}\times10^7=10^{-5}$. The uniform-pressure $K_{sp}$ direction was a discrete null response that the original relative metric could not classify reliably.
+
+These findings quantify, rather than disqualify, M1. Its residual and repaired state transaction are the comparison baseline, but its mixed matrix cannot be described as a complete physical Jacobian. The resulting omission ledger determines the order of M2a corrections.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/Figure_3_block_corrections.pdf}
+\caption{Representative complete perturbation curves distinguish the mixed quasi-Newton baseline from residual-preserving permeability-chain and saturation-block corrections. Individual panels do not establish universal nine-block consistency.}
+\label{fig:3}
+\end{figure}
+
+\subsection{Branchwise physical-Jacobian evidence}
+
+The permeability-chain correction introduced a stateless permeability value-and-derivative path and the resulting $K_{pu}$ and $K_{su}$ displacement chains. Residual, closure, physical-state, replay, and non-target-block parity were exact, while both corrected blocks satisfied the registered numerical-consistency criteria. The mechanics-row correction then restored full-scale equivalent-pressure mechanics coupling. The worst best-plateau relative errors for $K_{uu}$, $K_{up}$, and $K_{us}$ were $7.30\times10^{-13}$, $2.45\times10^{-14}$, and $5.27\times10^{-7}$, respectively; the affine mechanics patch and prior-stage regression controls passed.
+
+The saturation-block correction completed the branchwise $K_{ss}$ derivative without changing the saturation residual. The worst smooth-interior plateau error was $6.95\times10^{-11}$, the minimum registered branch-distance factor was 51.8, and the derivative-term sum closed to $1.11\times10^{-16}$. Uniform and affine saturation subpatch errors were $2.34\times10^{-12}$ and $2.50\times10^{-11}$, respectively. Limiter-inactive, ratio-cap, beta-min, endpoint-clip, and stable final-clip states were preserved as separate branches.
+
+The stabilization-separation audit distinguished $J_{phys}$ from the diagonal numerical guard. Raw $K_{pp}$ errors ranged from $2.15\times10^{-4}$ to $2.16\times10^{-3}$ over the registered series, whereas the guard-subtracted physical block ranged from $1.30\times10^{-15}$ to $1.34\times10^{-8}$. The stabilization-error decomposition closed to $8.80\times10^{-18}$. With a nullspace-aware absolute criterion for the uniform pressure direction, the worst non-null $K_{sp}$ relative error was $3.44\times10^{-9}$. Thus the raw returned matrix and the physical residual derivative have different, explicitly reported classifications.
+
+Integrated directional testing passed all six corrected flow-related blocks, all nine smooth-core blocks, and the smooth-core mixed full matrix. The preregistered strict record nevertheless remained 36 passing mixed series out of 39. The three FINAL\_\allowbreak{}CLIP\_\allowbreak{}LOW series had best binary64 relative errors of $5.03\times10^{-5}$, $1.52\times10^{-5}$, and $1.77\times10^{-5}$ and were retained as inconclusive under the original finite-difference gate. The active-set supplement did not rewrite this result. Instead, an independent stable-active-set oracle produced relative errors of $2.58\times10^{-16}$, $8.74\times10^{-17}$, and $2.80\times10^{-16}$ against $-J_{phys}d$. The corresponding best binary128 finite-difference errors were $4.34\times10^{-11}$, $9.82\times10^{-12}$, and $9.33\times10^{-16}$. This supports the derivative on that stable active set and identifies binary64 cancellation as the limitation of those three central differences; it does not cover the exact hard-clip switching surface.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/Figure_4_jphys_active_set.pdf}
+\caption{Numerical stabilization, smooth-core mixed directional evidence and the stable-active-set supplement are separate evidence layers. The oracle does not convert the original strict record into 39 of 39 central-difference passes.}
+\label{fig:4}
+\end{figure}
+
+\subsection{Assembled-patch evidence and nonlinear-convergence limits}
+
+The assembled patch and Newton-order stage used a 2 \ensuremath{\times} 2 Q4 patch and exercised mechanics, pressure, saturation, and mixed affine modes. The available run1 mechanics, pressure, saturation, and mixed directional patch modes passed, as did the run1 equal-state, rejected-trial, forced-cutback, zero-increment, conditioning, and finite gates. The independent term-by-term global patch closure, M1/M2 parity, and second process were not run after the hard stop, so the stage is not promoted to a complete patch or repeatability result. The preregistered Newton-order gate was not met. N1 contained zero consecutive eligible empirical-order segments above 1.8, and N2 contained two rather than the required three. The registered Newton-order test therefore stopped because the required asymptotic sequence was unavailable; the patch and replay results were retained without promoting the Newton claim.
+
+The resolution postmortem audited metrics, constraints, Taylor defects, cancellation, and a binary128 mirror. For N2, binary128 empirical orders of 1.933, 1.998, and 2.000 supported a local quadratic trend. For N1, only one transition remained eligible above the fixed $10^{-28}$ diagnostic floor, so the cause could not be uniquely classified. A favorable N2 sequence was not used to override the failed two-benchmark gate.
+
+A frozen one-step-map audit then evaluated a frozen local one-step map without changing the target, initial directions, amplitudes, or operator. The registered root-error slopes were 0.374 for N1 and 0.318 for N2; residual slopes were 1.018 and 1.097. These results did not exhibit the preregistered uniformly quadratic local map. The discrepancy was reproducible within that audit, but no unique missing Jacobian term or single causal mechanism was identified.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/Figure_5_patch_newton_limits.pdf}
+\caption{Available assembled directional-patch and replay gates passed, while the two-benchmark Newton-order and frozen local-map criteria remained unmet. High-precision N2 behavior is shown with, not instead of, the N1 limitation.}
+\label{fig:5}
+\end{figure}
+
+\subsection{Direction-dependent local basin and unresolved mechanisms}
+
+The original local-basin run was blocked before classification because mathematical unbounded margins were serialized as values exceeding the finite-output contract and because two competing overlap norms had not been uniquely frozen. Its map was not retrospectively classified. The corrected local-basin rerun preregistered a bounded categorical margin representation, one unit-floor overlap norm, and exact inheritance of the original legacy directions without a second normalization. A complete independent rerun passed source identity, overlap, operator, decomposition, replay, finite, and repeatability gates.
+
+The corrected map found persistent registered basin entry in 23 of 26 benchmark-direction combinations. No common registered radius was established because N1/FIELD\_\allowbreak{}U, N1/FIELD\_\allowbreak{}P, and N2/FIELD\_\allowbreak{}P had no persistent entry. The observed basin was therefore direction dependent and partial, not a common Newton basin.
+
+The field-subspace audit froze those three target directions and seven controls and audited state/residual projection, manufactured-load reduction, scaled reduced operators, singular subspaces, one-step decomposition, branch preservation, replay, finite values, and independent repetition. The maximum registered directional operator defect was $1.38\times10^{-13}$. For N1/FIELD\_\allowbreak{}U, bottom-three singular-mode energy and response fractions were 0.471753 and 0.520872. For N1/FIELD\_\allowbreak{}P, equal-component pressure alignment and response fractions were 0.788200 and 0.762140. For N2/FIELD\_\allowbreak{}P, both equal-component fractions were 1.0, but the normalized operator response was approximately 0.993 and the bottom-three singular-mode contribution was negligible. None of the preregistered single-cause explanations reached the 0.90 dominance gate. No single preregistered mechanism explained at least 90\% of any target response, so all three directions remain mixed or unresolved. In particular, equal-pressure alignment is not by itself proof of a gauge or null mode.
+
+\begin{figure}[!htbp]
+\centering
+\includegraphics[width=\linewidth]{figures/Figure_6_basin_subspace.pdf}
+\caption{Persistent entry is direction dependent (23 of 26 combinations), and the three missing field-only directions remain mixed or unresolved after operator, projection and decomposition audits.}
+\label{fig:6}
+\end{figure}
+
+\section{Discussion: verification hierarchy and evidence limits}
+
+The case study shows why user-element credibility cannot be reduced to one convergence history or one final-field comparison. State ownership, residual determinism, derivative consistency, assembly behavior, nonlinear response, and engineering qualification are sequential but non-interchangeable evidence layers.
+
+\subsection{Rollback consistency is not Jacobian consistency}
+
+The CAP\_\allowbreak{}REF defect and the M1 tangent omissions occupy different logical layers. A hidden trial-updated cache makes the residual depend on undeclared history. A quasi-Newton matrix approximates the derivative of an otherwise deterministic residual. Repairing the first permits meaningful differentiation tests; it does not make the second exact. Conversely, correcting a tangent cannot restore a residual whose physical memory escaped host rollback. Lifecycle and Jacobian claims must therefore be reported separately.
+
+\subsection{Physical Jacobian and numerical matrix stabilization must be separated}
+
+The $K_{pp}$ audit illustrates why raw AMATRX cannot be equated automatically with a physical Jacobian. The unpaired diagonal guard predicts the raw directional mismatch, but its identical unscaled coefficient across displacement, pressure, and saturation diagonals is mixed-dimensional and unit dependent. Subtracting it closes the registered physical derivative; it does not validate the matrix received by the host, provide an inf--sup stabilization, or guarantee a bounded saturation field. Low-order poromechanical formulations can require explicit stability treatment and pressure-mode assessment \citep{whiteborja2008}. Likewise, conservative and bounded unsaturated-flow discretizations require dedicated balance and maximum-principle evidence \citep{celia1990}. Those studies were not completed here.
+
+\subsection{Directional consistency does not guarantee a common Newton basin}
+
+The smooth-core nine-block and full-matrix directional tests are strong local derivative evidence, yet the nonlinear map remained direction dependent. Newton behavior also depends on the radius over which the local linearization is informative, conditioning, mixed-field scaling, branch geometry, and higher-order terms. The 23/26 entry result and the three unresolved field directions show that accurate directional derivatives at registered states do not imply one direction-independent attraction radius.
+
+\subsection{Failed gates are verification evidence}
+
+The Newton-order hard stop, inconclusive resolution audit, negative fixed-band map, original output-contract failure and unresolved field-subspace mechanisms are retained alongside positive evidence. They prevent selective reporting of the favorable N2 high-precision trend and rule out an unconditional quadratic-convergence statement. Stopping further local-basin expansion is a scope decision, not a declaration that the remaining nonlinear behavior has been solved.
+
+\subsection{Stable active-set evidence does not cover exact switching points}
+
+The active-set supplement supports the lower hard-clip derivative only where the active set is stable and separated from its switching surface. At exact switching, a classical two-sided derivative need not exist. The active-set oracle, binary128 supplement, and 36/39 strict binary64 record must therefore remain visible together. Reporting the supplement as if it converted the original record into 39 strict central-difference passes would erase the intended distinction.
+
+\subsection{Local evidence is not engineering qualification}
+
+The single-element harness is valuable because it permits exhaustive state control, branch isolation and independent residual differentiation. It does not exercise full-domain assembly, boundary-condition provenance, global conservation or long-horizon nonlinear continuation. The bounded writer studies further show that diagnostic availability and physical-state validity are separate questions. Full-domain validity and production readiness remain unestablished.
+
+\subsection{Discretization, conservation, and benchmark-qualification limits}
+
+The element interpolates $u_x$, $u_y$, $p_w$, and $S_n$ with the same bilinear Q4 basis. No inf--sup proof, pressure checkerboard study, mesh convergence, time-step convergence, discrete maximum principle, or saturation-overshoot study is available. The scalar matrix guard is not a substitute for these tests. The registered RP and RS residuals also use different native balance units: RP is an implemented wetting pressure-storage/volumetric balance, whereas RS is a non-wetting mass balance. They cannot be summed as a two-phase total-mass statement, and no accepted-increment boundary-flux ledger has yet closed either full-domain balance.
+
+The evidence is therefore code verification on controlled P1 states, not solution verification or validation for a complex geotechnical application. Before a stronger computational-method claim is resubmitted, the minimum additional evidence is a documented benchmark with known or converged behavior, mesh and time refinement, pressure-mode and saturation-bound audits, separate native-balance closure, and a same-root comparison of $\mathbf{J}_{returned}$ and $\mathbf{J}_{phys}$ nonlinear behavior. Computational cost and robustness must also be reported on that benchmark. The present manuscript retains these as unmet gates rather than extrapolating from single-element derivatives.
+
+\subsection{Implications for auditable UEL verification}
+
+The evidence supports a staged verification order: state-transaction tests should precede derivative tests; derivative evidence should precede assembled nonlinear interpretation; and engineering claims should require an independently qualified benchmark with discretization, balance, boundedness, repeatability, and cost evidence. An iterative two-way fixed-stress scheme remains a proposed extension rather than an inferred property of the present monolithic element. Its trial, accepted and outer-iteration states would require separate versioning and a same-root comparison against the monolithic formulation. Accepted-state full-domain output likewise remains a separate protocol requiring solver-managed provenance, complete coverage, conservation observability and non-perturbation. Neither direction is presented as a completed contribution of this paper.
+
+
+\begin{table}[!htbp]
+\centering
+\caption{Hierarchical verification status and evidence boundaries.}
+\label{tab:4}
+\small
+\begin{tabularx}{\textwidth}{@{}>{\raggedright\arraybackslash}p{0.19\textwidth}*{2}{>{\raggedright\arraybackslash}X}@{}}
+\toprule
+Verification layer & Evidence established in this paper & Qualification boundary \\
+\midrule
+State transaction & Six rollback conditions and the identified CAP\_\allowbreak{}REF counterexample/repair & Safety of all persistent objects and all host paths is not established \\
+Traceability & Bidirectional equation-to-code/state/Jacobian ledger & Thermodynamic consistency and material calibration are not established \\
+Branch derivatives & Registered smooth and stable-active-set physical-Jacobian evidence & The strict record remains 36/39; exact-switch and raw-AMATRX completeness are not established \\
+Assembly and nonlinear response & Available patch/replay evidence with retained Newton-order and basin limits & Complete patch repeatability, universal quadratic convergence, and a common basin are not established \\
+Benchmark and deployment & Qualification requirements are defined explicitly & Mesh/time convergence, native conservation, full-domain validity, and production readiness are not established \\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\section{Conclusions}
+
+This study established an auditable framework for separating state-transaction safety, residual determinism, derivative consistency, assembled behavior, and engineering qualification in a complex multiphysics UEL. Source tracing and standalone equal-state replay provided a falsifying case in which private trial-updated capillary-reference memory made a later residual depend on rejected history. Moving that reference and its validity flag into solver-managed state repaired the identified path in the replay tests; repaired-build Abaqus patch, cutback, and restart records provide complementary bounded host evidence rather than a complete unsafe-versus-repaired host replay.
+
+The equation-to-code-state-Jacobian ledger separated residual determinism from derivative quality. The rollback-safe baseline retained known quasi-Newton approximations. Residual-preserving changes completed registered branch derivatives for equivalent-pressure mechanics coupling, stress-dependent permeability, saturation storage and flux, and the physical part of the pressure block. Smooth-core block and mixed-direction tests support this branchwise physical-derivative candidate on the registered P1 states. The strict binary64 mixed record remains 36/39; the three lower-clip directions are supported only by a separately reported stable-active-set oracle and binary128 evidence.
+
+The nonlinear evidence places a stronger boundary on the claim. The preregistered Newton-order gate was not met, no uniform quadratic one-step map was observed, and persistent local-basin entry occurred for 23/26 benchmark--direction combinations without a common radius. The remaining three field-only directions could not be assigned to one projection, near-null, load, branch, resolution, or Jacobian mechanism.
+
+Accordingly, the principal result is an auditable pathway for testing rollback consistency, traceability, branchwise derivative correctness, and numerical reproducibility without promoting one evidence layer into another. For the frozen UEL, that pathway supports bounded state-ownership and selected branch-derivative claims over the controlled domain while preserving the failed Newton-order gate and the partial basin result. Equal-order stability, separate native-balance conservation, mesh and time convergence, thermodynamic consistency, exact-switching derivatives, full-domain validity, and production readiness are not established. A fully coupled engineering benchmark satisfying convergence, balance, boundedness, repeatability, and cost criteria remains a separate qualification requirement.
+
+\section*{Data and code availability}
+
+Code, data, figure scripts, selected host evidence, and manuscript-supporting files are openly available at \url{https://github.com/yqma7980/rollback-consistent-multiphase-uel-verification} and are archived in Zenodo at \href{https://doi.org/10.5281/zenodo.21773371}{10.5281/zenodo.21773371}. Release v0.8.2 is self-contained for rebuilding the six main and twelve supplementary figures from distributed CSV inputs; its SHA-256 manifest covers the byte-preserved UEL snapshot, integrated harness, frozen inputs and evidence, figure builders, and selected repaired-build Abaqus patch material. Code is released under the MIT License, while data, documentation, figures, and manuscript-supporting material are released under Creative Commons Attribution 4.0 International. The archive excludes licensed Abaqus software and does not contain the complete unsafe-versus-repaired host replay; numerical regeneration requires licensed Abaqus 2026 and Intel Fortran.
+
+\section*{Declaration of generative AI and AI-assisted technologies in the writing process}
+
+During preparation of this work, the authors used a generative AI-assisted tool to support language editing, document structuring, consistency checks, and the drafting and checking of post-processing, figure, packaging, and LaTeX automation scripts. All numerical simulations were executed in the authors' local computational environment; AI-assisted tools were not used to generate, fabricate, or alter scientific data. The authors reviewed and edited all assisted material, verified the source, evidence mappings, figures, and references, and take full responsibility for the article.
+
+\section*{Declaration of competing interest}
+
+The authors declare that they have no known competing financial interests or personal relationships that could have appeared to influence the work reported in this paper.
+
+\section*{Funding}
+
+This work was supported by the National Natural Science Foundation of China (General Program, Grant No. 52474038).
+
+\section*{CRediT authorship contribution statement}
+
+Weiji Sun: Conceptualization, Methodology, Software, Validation, Formal analysis, Investigation, Data curation, Visualization, Writing -- original draft, Writing -- review \& editing, Supervision, Project administration, Funding acquisition. Yangqi Ma: Methodology, Software, Validation, Formal analysis, Investigation, Data curation, Visualization, Writing -- review \& editing. Bing Liang: Conceptualization, Methodology, Supervision, Writing -- review \& editing. Shi He: Methodology, Writing -- review \& editing. Bo Liang: Methodology, Validation, Investigation, Writing -- review \& editing.
+
+\bibliographystyle{elsarticle-harv}
+\bibliography{paper1_references_v0.8.2}
+
+\end{document}

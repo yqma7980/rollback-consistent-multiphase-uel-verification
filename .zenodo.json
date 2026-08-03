@@ -1,0 +1,46 @@
+{
+    "title":  "Rollback-consistent multiphase UEL verification artifact",
+    "upload_type":  "software",
+    "description":  "Public reproducibility artifact with evidence-bounded code, frozen inputs, figure data and selected host records. It is self-contained for figure reconstruction but does not establish engineering qualification or full-domain conservation.",
+    "creators":  [
+                     {
+                         "name":  "Sun, Weiji",
+                         "affiliation":  "School of Mechanics and Engineering, Liaoning Technical University"
+                     },
+                     {
+                         "name":  "Ma, Yangqi",
+                         "affiliation":  "School of Mechanics and Engineering, Liaoning Technical University"
+                     },
+                     {
+                         "name":  "Liang, Bing",
+                         "affiliation":  "School of Mechanics and Engineering, Liaoning Technical University"
+                     },
+                     {
+                         "name":  "He, Shi",
+                         "affiliation":  "China Coal Research Institute"
+                     },
+                     {
+                         "name":  "Liang, Bo",
+                         "affiliation":  "School of Mechanics and Engineering, Liaoning Technical University"
+                     }
+                 ],
+    "access_right":  "open",
+    "license":  "cc-by-4.0",
+    "keywords":  [
+                     "Abaqus",
+                     "user element",
+                     "multiphase poromechanics",
+                     "rollback consistency",
+                     "Jacobian verification",
+                     "numerical reproducibility"
+                 ],
+    "related_identifiers":  [
+                                {
+                                    "identifier":  "https://github.com/yqma7980/rollback-consistent-multiphase-uel-verification",
+                                    "relation":  "isSupplementTo",
+                                    "scheme":  "url"
+                                }
+                            ],
+    "version":  "0.8.2",
+    "publication_date":  "2026-08-03"
+}

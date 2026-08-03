@@ -1,0 +1,584 @@
+figure_id,text,font_family,font_size_pt,hard_minimum_pass,times_new_roman_pass
+Figure 1,Committed state,Times New Roman,11.5,1,1
+Figure 1,solver-managed SVARS,Times New Roman,11.0,1,1
+Figure 1,CAP_REF = $C_n$,Times New Roman,11.0,1,1
+Figure 1,accepted $x_n$,Times New Roman,11.0,1,1
+Figure 1,Trial A,Times New Roman,11.5,1,1
+Figure 1,"candidate $x_A, C_A$",Times New Roman,11.0,1,1
+Figure 1,may be rejected,Times New Roman,11.0,1,1
+Figure 1,Trial B,Times New Roman,11.5,1,1
+Figure 1,same declared input,Times New Roman,11.0,1,1
+Figure 1,must restart from $C_n$,Times New Roman,11.0,1,1
+Figure 1,Unsafe private cache,Times New Roman,11.5,1,1
+Figure 1,trial writes $C_A$,Times New Roman,11.0,1,1
+Figure 1,rejection cannot restore it,Times New Roman,11.0,1,1
+Figure 1,Solver-managed repair,Times New Roman,11.5,1,1
+Figure 1,candidate remains in,Times New Roman,11.0,1,1
+Figure 1,solver-managed SVARS,Times New Roman,11.0,1,1
+Figure 1,commit only after acceptance,Times New Roman,11.0,1,1
+Figure 1,history leak,Times New Roman,11.0,1,1
+Figure 1,"Equal-state replay, rejection order, cutback and restart are independent gates; | the repair is bounded to the identified CAP_REF path.",Times New Roman,11.0,1,1
+Figure 2,Relations,Times New Roman,11.5,1,1
+Figure 2,"$p_{eq},p_c,K$",Times New Roman,11.0,1,1
+Figure 2,branches,Times New Roman,11.0,1,1
+Figure 2,Residual,Times New Roman,11.5,1,1
+Figure 2,"$R_u,R_p,R_s$",Times New Roman,11.0,1,1
+Figure 2,units/signs,Times New Roman,11.0,1,1
+Figure 2,Matrix,Times New Roman,11.5,1,1
+Figure 2,$J_{phys}$,Times New Roman,11.0,1,1
+Figure 2,$J_{num}$ / raw,Times New Roman,11.0,1,1
+Figure 2,State,Times New Roman,11.5,1,1
+Figure 2,committed,Times New Roman,11.0,1,1
+Figure 2,trial/diagnostic,Times New Roman,11.0,1,1
+Figure 2,Host,Times New Roman,11.5,1,1
+Figure 2,RHS/AMATRX,Times New Roman,11.0,1,1
+Figure 2,accept/reject,Times New Roman,11.0,1,1
+Figure 2,Matrix entry,Times New Roman,11.5,1,1
+Figure 2,paired with residual?,Times New Roman,11.0,1,1
+Figure 2,physical or numerical?,Times New Roman,11.0,1,1
+Figure 2,Changed state,Times New Roman,11.5,1,1
+Figure 2,who owns/commits it?,Times New Roman,11.0,1,1
+Figure 2,can rejection restore it?,Times New Roman,11.0,1,1
+Figure 2,Passing derivative,Times New Roman,11.5,1,1
+Figure 2,which branch/direction?,Times New Roman,11.0,1,1
+Figure 2,does it imply a basin?,Times New Roman,11.0,1,1
+Figure 2,"Reverse audit prevents matrix, state and convergence claims from being conflated.",Times New Roman,11.0,1,1
+Figure 3,(a),Times New Roman,12.0,1,1
+Figure 3,"perturbation scale, h",Times New Roman,11.0,1,1
+Figure 3,1e-10,Times New Roman,11.0,1,1
+Figure 3,1e-10,Times New Roman,11.0,1,1
+Figure 3,1e-8,Times New Roman,11.0,1,1
+Figure 3,1e-8,Times New Roman,11.0,1,1
+Figure 3,1e-6,Times New Roman,11.0,1,1
+Figure 3,1e-6,Times New Roman,11.0,1,1
+Figure 3,1e-4,Times New Roman,11.0,1,1
+Figure 3,1e-4,Times New Roman,11.0,1,1
+Figure 3,1e-2,Times New Roman,11.0,1,1
+Figure 3,1e-2,Times New Roman,11.0,1,1
+Figure 3,1e0,Times New Roman,11.0,1,1
+Figure 3,1e0,Times New Roman,11.0,1,1
+Figure 3,1e2,Times New Roman,11.0,1,1
+Figure 3,1e2,Times New Roman,11.0,1,1
+Figure 3,error / applicable gate,Times New Roman,11.0,1,1
+Figure 3,1e-16,Times New Roman,11.0,1,1
+Figure 3,1e-16,Times New Roman,11.0,1,1
+Figure 3,1e-13,Times New Roman,11.0,1,1
+Figure 3,1e-13,Times New Roman,11.0,1,1
+Figure 3,1e-10,Times New Roman,11.0,1,1
+Figure 3,1e-10,Times New Roman,11.0,1,1
+Figure 3,1e-7,Times New Roman,11.0,1,1
+Figure 3,1e-7,Times New Roman,11.0,1,1
+Figure 3,1e-4,Times New Roman,11.0,1,1
+Figure 3,1e-4,Times New Roman,11.0,1,1
+Figure 3,1e-1,Times New Roman,11.0,1,1
+Figure 3,1e-1,Times New Roman,11.0,1,1
+Figure 3,1e2,Times New Roman,11.0,1,1
+Figure 3,1e2,Times New Roman,11.0,1,1
+Figure 3,1e5,Times New Roman,11.0,1,1
+Figure 3,1e5,Times New Roman,11.0,1,1
+Figure 3,1e8,Times New Roman,11.0,1,1
+Figure 3,1e8,Times New Roman,11.0,1,1
+Figure 3,1e11,Times New Roman,11.0,1,1
+Figure 3,1e11,Times New Roman,11.0,1,1
+Figure 3,M1 KPU: registered omission,Times New Roman,11.5,1,1
+Figure 3,(b),Times New Roman,12.0,1,1
+Figure 3,"perturbation scale, h",Times New Roman,11.0,1,1
+Figure 3,1e-10,Times New Roman,11.0,1,1
+Figure 3,1e-10,Times New Roman,11.0,1,1
+Figure 3,1e-8,Times New Roman,11.0,1,1
+Figure 3,1e-8,Times New Roman,11.0,1,1
+Figure 3,1e-6,Times New Roman,11.0,1,1
+Figure 3,1e-6,Times New Roman,11.0,1,1
+Figure 3,1e-4,Times New Roman,11.0,1,1
+Figure 3,1e-4,Times New Roman,11.0,1,1
+Figure 3,1e-2,Times New Roman,11.0,1,1
+Figure 3,1e-2,Times New Roman,11.0,1,1
+Figure 3,1e0,Times New Roman,11.0,1,1
+Figure 3,1e0,Times New Roman,11.0,1,1
+Figure 3,1e2,Times New Roman,11.0,1,1
+Figure 3,1e2,Times New Roman,11.0,1,1
+Figure 3,error / applicable gate,Times New Roman,11.0,1,1
+Figure 3,1e-15,Times New Roman,11.0,1,1
+Figure 3,1e-15,Times New Roman,11.0,1,1
+Figure 3,1e-13,Times New Roman,11.0,1,1
+Figure 3,1e-13,Times New Roman,11.0,1,1
+Figure 3,1e-11,Times New Roman,11.0,1,1
+Figure 3,1e-11,Times New Roman,11.0,1,1
+Figure 3,1e-9,Times New Roman,11.0,1,1
+Figure 3,1e-9,Times New Roman,11.0,1,1
+Figure 3,1e-7,Times New Roman,11.0,1,1
+Figure 3,1e-7,Times New Roman,11.0,1,1
+Figure 3,1e-5,Times New Roman,11.0,1,1
+Figure 3,1e-5,Times New Roman,11.0,1,1
+Figure 3,1e-3,Times New Roman,11.0,1,1
+Figure 3,1e-3,Times New Roman,11.0,1,1
+Figure 3,1e-1,Times New Roman,11.0,1,1
+Figure 3,1e-1,Times New Roman,11.0,1,1
+Figure 3,1e1,Times New Roman,11.0,1,1
+Figure 3,1e1,Times New Roman,11.0,1,1
+Figure 3,1e3,Times New Roman,11.0,1,1
+Figure 3,1e3,Times New Roman,11.0,1,1
+Figure 3,Corrected KPU: physical derivative,Times New Roman,11.5,1,1
+Figure 3,(c),Times New Roman,12.0,1,1
+Figure 3,"perturbation scale, h",Times New Roman,11.0,1,1
+Figure 3,1e-10,Times New Roman,11.0,1,1
+Figure 3,1e-10,Times New Roman,11.0,1,1
+Figure 3,1e-8,Times New Roman,11.0,1,1
+Figure 3,1e-8,Times New Roman,11.0,1,1
+Figure 3,1e-6,Times New Roman,11.0,1,1
+Figure 3,1e-6,Times New Roman,11.0,1,1
+Figure 3,1e-4,Times New Roman,11.0,1,1
+Figure 3,1e-4,Times New Roman,11.0,1,1
+Figure 3,1e-2,Times New Roman,11.0,1,1
+Figure 3,1e-2,Times New Roman,11.0,1,1
+Figure 3,1e0,Times New Roman,11.0,1,1
+Figure 3,1e0,Times New Roman,11.0,1,1
+Figure 3,1e2,Times New Roman,11.0,1,1
+Figure 3,1e2,Times New Roman,11.0,1,1
+Figure 3,error / applicable gate,Times New Roman,11.0,1,1
+Figure 3,1e-4,Times New Roman,11.0,1,1
+Figure 3,1e-4,Times New Roman,11.0,1,1
+Figure 3,1e-3,Times New Roman,11.0,1,1
+Figure 3,1e-3,Times New Roman,11.0,1,1
+Figure 3,1e-2,Times New Roman,11.0,1,1
+Figure 3,1e-2,Times New Roman,11.0,1,1
+Figure 3,1e-1,Times New Roman,11.0,1,1
+Figure 3,1e-1,Times New Roman,11.0,1,1
+Figure 3,1e0,Times New Roman,11.0,1,1
+Figure 3,1e0,Times New Roman,11.0,1,1
+Figure 3,1e1,Times New Roman,11.0,1,1
+Figure 3,1e1,Times New Roman,11.0,1,1
+Figure 3,1e2,Times New Roman,11.0,1,1
+Figure 3,1e2,Times New Roman,11.0,1,1
+Figure 3,1e3,Times New Roman,11.0,1,1
+Figure 3,1e3,Times New Roman,11.0,1,1
+Figure 3,1e4,Times New Roman,11.0,1,1
+Figure 3,1e4,Times New Roman,11.0,1,1
+Figure 3,M1 KSS: incomplete branch derivative,Times New Roman,11.5,1,1
+Figure 3,(d),Times New Roman,12.0,1,1
+Figure 3,"perturbation scale, h",Times New Roman,11.0,1,1
+Figure 3,1e-10,Times New Roman,11.0,1,1
+Figure 3,1e-10,Times New Roman,11.0,1,1
+Figure 3,1e-8,Times New Roman,11.0,1,1
+Figure 3,1e-8,Times New Roman,11.0,1,1
+Figure 3,1e-6,Times New Roman,11.0,1,1
+Figure 3,1e-6,Times New Roman,11.0,1,1
+Figure 3,1e-4,Times New Roman,11.0,1,1
+Figure 3,1e-4,Times New Roman,11.0,1,1
+Figure 3,1e-2,Times New Roman,11.0,1,1
+Figure 3,1e-2,Times New Roman,11.0,1,1
+Figure 3,1e0,Times New Roman,11.0,1,1
+Figure 3,1e0,Times New Roman,11.0,1,1
+Figure 3,1e2,Times New Roman,11.0,1,1
+Figure 3,1e2,Times New Roman,11.0,1,1
+Figure 3,error / applicable gate,Times New Roman,11.0,1,1
+Figure 3,1e-10,Times New Roman,11.0,1,1
+Figure 3,1e-10,Times New Roman,11.0,1,1
+Figure 3,1e-8,Times New Roman,11.0,1,1
+Figure 3,1e-8,Times New Roman,11.0,1,1
+Figure 3,1e-6,Times New Roman,11.0,1,1
+Figure 3,1e-6,Times New Roman,11.0,1,1
+Figure 3,1e-4,Times New Roman,11.0,1,1
+Figure 3,1e-4,Times New Roman,11.0,1,1
+Figure 3,1e-2,Times New Roman,11.0,1,1
+Figure 3,1e-2,Times New Roman,11.0,1,1
+Figure 3,1e0,Times New Roman,11.0,1,1
+Figure 3,1e0,Times New Roman,11.0,1,1
+Figure 3,1e2,Times New Roman,11.0,1,1
+Figure 3,1e2,Times New Roman,11.0,1,1
+Figure 3,1e4,Times New Roman,11.0,1,1
+Figure 3,1e4,Times New Roman,11.0,1,1
+Figure 3,Corrected KSS: branchwise derivative,Times New Roman,11.5,1,1
+Figure 3,worst of all registered series,Times New Roman,11.0,1,1
+Figure 3,registered gate,Times New Roman,11.0,1,1
+Figure 4,(a),Times New Roman,12.0,1,1
+Figure 4,h,Times New Roman,11.0,1,1
+Figure 4,1e-11,Times New Roman,11.0,1,1
+Figure 4,1e-11,Times New Roman,11.0,1,1
+Figure 4,1e-8,Times New Roman,11.0,1,1
+Figure 4,1e-8,Times New Roman,11.0,1,1
+Figure 4,1e-5,Times New Roman,11.0,1,1
+Figure 4,1e-5,Times New Roman,11.0,1,1
+Figure 4,1e-2,Times New Roman,11.0,1,1
+Figure 4,1e-2,Times New Roman,11.0,1,1
+Figure 4,1e1,Times New Roman,11.0,1,1
+Figure 4,1e1,Times New Roman,11.0,1,1
+Figure 4,1e4,Times New Roman,11.0,1,1
+Figure 4,1e4,Times New Roman,11.0,1,1
+Figure 4,median relative L2 error,Times New Roman,11.0,1,1
+Figure 4,1e-19,Times New Roman,11.0,1,1
+Figure 4,1e-19,Times New Roman,11.0,1,1
+Figure 4,1e-16,Times New Roman,11.0,1,1
+Figure 4,1e-16,Times New Roman,11.0,1,1
+Figure 4,1e-13,Times New Roman,11.0,1,1
+Figure 4,1e-13,Times New Roman,11.0,1,1
+Figure 4,1e-10,Times New Roman,11.0,1,1
+Figure 4,1e-10,Times New Roman,11.0,1,1
+Figure 4,1e-7,Times New Roman,11.0,1,1
+Figure 4,1e-7,Times New Roman,11.0,1,1
+Figure 4,1e-4,Times New Roman,11.0,1,1
+Figure 4,1e-4,Times New Roman,11.0,1,1
+Figure 4,1e-1,Times New Roman,11.0,1,1
+Figure 4,1e-1,Times New Roman,11.0,1,1
+Figure 4,1e2,Times New Roman,11.0,1,1
+Figure 4,1e2,Times New Roman,11.0,1,1
+Figure 4,$J_{returned}=J_{phys}+J_{num}$,Times New Roman,11.5,1,1
+Figure 4,returned $K_{pp}$,Times New Roman,11.0,1,1
+Figure 4,physical $K_{pp}$,Times New Roman,11.0,1,1
+Figure 4,$10^{-5}$ gate,Times New Roman,11.0,1,1
+Figure 4,(b),Times New Roman,12.0,1,1
+Figure 4,h,Times New Roman,11.0,1,1
+Figure 4,1e-11,Times New Roman,11.0,1,1
+Figure 4,1e-11,Times New Roman,11.0,1,1
+Figure 4,1e-8,Times New Roman,11.0,1,1
+Figure 4,1e-8,Times New Roman,11.0,1,1
+Figure 4,1e-5,Times New Roman,11.0,1,1
+Figure 4,1e-5,Times New Roman,11.0,1,1
+Figure 4,1e-2,Times New Roman,11.0,1,1
+Figure 4,1e-2,Times New Roman,11.0,1,1
+Figure 4,1e1,Times New Roman,11.0,1,1
+Figure 4,1e1,Times New Roman,11.0,1,1
+Figure 4,1e4,Times New Roman,11.0,1,1
+Figure 4,1e4,Times New Roman,11.0,1,1
+Figure 4,relative scaled L2 error,Times New Roman,11.0,1,1
+Figure 4,1e-18,Times New Roman,11.0,1,1
+Figure 4,1e-18,Times New Roman,11.0,1,1
+Figure 4,1e-15,Times New Roman,11.0,1,1
+Figure 4,1e-15,Times New Roman,11.0,1,1
+Figure 4,1e-12,Times New Roman,11.0,1,1
+Figure 4,1e-12,Times New Roman,11.0,1,1
+Figure 4,1e-9,Times New Roman,11.0,1,1
+Figure 4,1e-9,Times New Roman,11.0,1,1
+Figure 4,1e-6,Times New Roman,11.0,1,1
+Figure 4,1e-6,Times New Roman,11.0,1,1
+Figure 4,1e-3,Times New Roman,11.0,1,1
+Figure 4,1e-3,Times New Roman,11.0,1,1
+Figure 4,1e0,Times New Roman,11.0,1,1
+Figure 4,1e0,Times New Roman,11.0,1,1
+Figure 4,1e3,Times New Roman,11.0,1,1
+Figure 4,1e3,Times New Roman,11.0,1,1
+Figure 4,1e6,Times New Roman,11.0,1,1
+Figure 4,1e6,Times New Roman,11.0,1,1
+Figure 4,Mixed full-matrix directional series,Times New Roman,11.5,1,1
+Figure 4,smooth/stable core median,Times New Roman,11.0,1,1
+Figure 4,FINAL_CLIP_LOW/M1,Times New Roman,11.0,1,1
+Figure 4,FINAL_CLIP_LOW/M2,Times New Roman,11.0,1,1
+Figure 4,FINAL_CLIP_LOW/M3,Times New Roman,11.0,1,1
+Figure 4,$10^{-5}$ gate,Times New Roman,11.0,1,1
+Figure 4,(c),Times New Roman,12.0,1,1
+Figure 4,M1,Times New Roman,11.0,1,1
+Figure 4,M1,Times New Roman,11.0,1,1
+Figure 4,M2,Times New Roman,11.0,1,1
+Figure 4,M2,Times New Roman,11.0,1,1
+Figure 4,M3,Times New Roman,11.0,1,1
+Figure 4,M3,Times New Roman,11.0,1,1
+Figure 4,best relative L2 error,Times New Roman,11.0,1,1
+Figure 4,1e-20,Times New Roman,11.0,1,1
+Figure 4,1e-20,Times New Roman,11.0,1,1
+Figure 4,1e-17,Times New Roman,11.0,1,1
+Figure 4,1e-17,Times New Roman,11.0,1,1
+Figure 4,1e-14,Times New Roman,11.0,1,1
+Figure 4,1e-14,Times New Roman,11.0,1,1
+Figure 4,1e-11,Times New Roman,11.0,1,1
+Figure 4,1e-11,Times New Roman,11.0,1,1
+Figure 4,1e-8,Times New Roman,11.0,1,1
+Figure 4,1e-8,Times New Roman,11.0,1,1
+Figure 4,1e-5,Times New Roman,11.0,1,1
+Figure 4,1e-5,Times New Roman,11.0,1,1
+Figure 4,1e-2,Times New Roman,11.0,1,1
+Figure 4,1e-2,Times New Roman,11.0,1,1
+Figure 4,1e1,Times New Roman,11.0,1,1
+Figure 4,1e1,Times New Roman,11.0,1,1
+Figure 4,Stable FINAL_CLIP_LOW active-set supplement; 36/39 strict record retained,Times New Roman,11.5,1,1
+Figure 4,strict FD gate,Times New Roman,11.0,1,1
+Figure 4,active-set oracle gate,Times New Roman,11.0,1,1
+Figure 4,binary64 strict,Times New Roman,11.0,1,1
+Figure 4,binary128 FD,Times New Roman,11.0,1,1
+Figure 4,analytic oracle,Times New Roman,11.0,1,1
+Figure 5,(a),Times New Roman,12.0,1,1
+Figure 5,TX,Times New Roman,11.0,1,1
+Figure 5,TX,Times New Roman,11.0,1,1
+Figure 5,TY,Times New Roman,11.0,1,1
+Figure 5,TY,Times New Roman,11.0,1,1
+Figure 5,ROT,Times New Roman,11.0,1,1
+Figure 5,ROT,Times New Roman,11.0,1,1
+Figure 5,EXX,Times New Roman,11.0,1,1
+Figure 5,EXX,Times New Roman,11.0,1,1
+Figure 5,EYY,Times New Roman,11.0,1,1
+Figure 5,EYY,Times New Roman,11.0,1,1
+Figure 5,GXY,Times New Roman,11.0,1,1
+Figure 5,GXY,Times New Roman,11.0,1,1
+Figure 5,P0,Times New Roman,11.0,1,1
+Figure 5,P0,Times New Roman,11.0,1,1
+Figure 5,Px,Times New Roman,11.0,1,1
+Figure 5,Px,Times New Roman,11.0,1,1
+Figure 5,Py,Times New Roman,11.0,1,1
+Figure 5,Py,Times New Roman,11.0,1,1
+Figure 5,S0,Times New Roman,11.0,1,1
+Figure 5,S0,Times New Roman,11.0,1,1
+Figure 5,Sx,Times New Roman,11.0,1,1
+Figure 5,Sx,Times New Roman,11.0,1,1
+Figure 5,Sy,Times New Roman,11.0,1,1
+Figure 5,Sy,Times New Roman,11.0,1,1
+Figure 5,Mix,Times New Roman,11.0,1,1
+Figure 5,Mix,Times New Roman,11.0,1,1
+Figure 5,registered scaled error,Times New Roman,11.0,1,1
+Figure 5,1e-13,Times New Roman,11.0,1,1
+Figure 5,1e-13,Times New Roman,11.0,1,1
+Figure 5,1e-12,Times New Roman,11.0,1,1
+Figure 5,1e-12,Times New Roman,11.0,1,1
+Figure 5,1e-11,Times New Roman,11.0,1,1
+Figure 5,1e-11,Times New Roman,11.0,1,1
+Figure 5,1e-10,Times New Roman,11.0,1,1
+Figure 5,1e-10,Times New Roman,11.0,1,1
+Figure 5,1e-9,Times New Roman,11.0,1,1
+Figure 5,1e-9,Times New Roman,11.0,1,1
+Figure 5,1e-8,Times New Roman,11.0,1,1
+Figure 5,1e-8,Times New Roman,11.0,1,1
+Figure 5,1e-7,Times New Roman,11.0,1,1
+Figure 5,1e-7,Times New Roman,11.0,1,1
+Figure 5,1e-6,Times New Roman,11.0,1,1
+Figure 5,1e-6,Times New Roman,11.0,1,1
+Figure 5,2x2 Q4 patch modes,Times New Roman,11.5,1,1
+Figure 5,nonzero gate,Times New Roman,11.0,1,1
+Figure 5,null gate,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,PASS,Times New Roman,11.0,1,1
+Figure 5,(b),Times New Roman,12.0,1,1
+Figure 5,RHS,Times New Roman,11.0,1,1
+Figure 5,RHS,Times New Roman,11.0,1,1
+Figure 5,Matrix,Times New Roman,11.0,1,1
+Figure 5,Matrix,Times New Roman,11.0,1,1
+Figure 5,SVARS,Times New Roman,11.0,1,1
+Figure 5,SVARS,Times New Roman,11.0,1,1
+Figure 5,Branch,Times New Roman,11.0,1,1
+Figure 5,Branch,Times New Roman,11.0,1,1
+Figure 5,H0,Times New Roman,11.0,1,1
+Figure 5,H0,Times New Roman,11.0,1,1
+Figure 5,H1 A/B,Times New Roman,11.0,1,1
+Figure 5,H1 A/B,Times New Roman,11.0,1,1
+Figure 5,H1 B/A,Times New Roman,11.0,1,1
+Figure 5,H1 B/A,Times New Roman,11.0,1,1
+Figure 5,H2/H3,Times New Roman,11.0,1,1
+Figure 5,H2/H3,Times New Roman,11.0,1,1
+Figure 5,H4,Times New Roman,11.0,1,1
+Figure 5,H4,Times New Roman,11.0,1,1
+Figure 5,H5,Times New Roman,11.0,1,1
+Figure 5,H5,Times New Roman,11.0,1,1
+Figure 5,Rollback and rejected-trial replay,Times New Roman,11.5,1,1
+Figure 5,(c),Times New Roman,12.0,1,1
+Figure 5,Newton iteration,Times New Roman,11.0,1,1
+Figure 5,0,Times New Roman,11.0,1,1
+Figure 5,0,Times New Roman,11.0,1,1
+Figure 5,2,Times New Roman,11.0,1,1
+Figure 5,2,Times New Roman,11.0,1,1
+Figure 5,4,Times New Roman,11.0,1,1
+Figure 5,4,Times New Roman,11.0,1,1
+Figure 5,6,Times New Roman,11.0,1,1
+Figure 5,6,Times New Roman,11.0,1,1
+Figure 5,8,Times New Roman,11.0,1,1
+Figure 5,8,Times New Roman,11.0,1,1
+Figure 5,"empirical residual order, q",Times New Roman,11.0,1,1
+Figure 5,0.0,Times New Roman,11.0,1,1
+Figure 5,0.0,Times New Roman,11.0,1,1
+Figure 5,0.5,Times New Roman,11.0,1,1
+Figure 5,0.5,Times New Roman,11.0,1,1
+Figure 5,1.0,Times New Roman,11.0,1,1
+Figure 5,1.0,Times New Roman,11.0,1,1
+Figure 5,1.5,Times New Roman,11.0,1,1
+Figure 5,1.5,Times New Roman,11.0,1,1
+Figure 5,2.0,Times New Roman,11.0,1,1
+Figure 5,2.0,Times New Roman,11.0,1,1
+Figure 5,2.5,Times New Roman,11.0,1,1
+Figure 5,2.5,Times New Roman,11.0,1,1
+Figure 5,I6 Newton-order hard stop,Times New Roman,11.5,1,1
+Figure 5,N1,Times New Roman,11.0,1,1
+Figure 5,N2,Times New Roman,11.0,1,1
+Figure 5,registered q gate,Times New Roman,11.0,1,1
+Figure 5,(d),Times New Roman,12.0,1,1
+Figure 5,Newton iteration,Times New Roman,11.0,1,1
+Figure 5,0,Times New Roman,11.0,1,1
+Figure 5,0,Times New Roman,11.0,1,1
+Figure 5,2,Times New Roman,11.0,1,1
+Figure 5,2,Times New Roman,11.0,1,1
+Figure 5,4,Times New Roman,11.0,1,1
+Figure 5,4,Times New Roman,11.0,1,1
+Figure 5,6,Times New Roman,11.0,1,1
+Figure 5,6,Times New Roman,11.0,1,1
+Figure 5,8,Times New Roman,11.0,1,1
+Figure 5,8,Times New Roman,11.0,1,1
+Figure 5,10,Times New Roman,11.0,1,1
+Figure 5,10,Times New Roman,11.0,1,1
+Figure 5,"empirical residual order, q",Times New Roman,11.0,1,1
+Figure 5,0.0,Times New Roman,11.0,1,1
+Figure 5,0.0,Times New Roman,11.0,1,1
+Figure 5,0.5,Times New Roman,11.0,1,1
+Figure 5,0.5,Times New Roman,11.0,1,1
+Figure 5,1.0,Times New Roman,11.0,1,1
+Figure 5,1.0,Times New Roman,11.0,1,1
+Figure 5,1.5,Times New Roman,11.0,1,1
+Figure 5,1.5,Times New Roman,11.0,1,1
+Figure 5,2.0,Times New Roman,11.0,1,1
+Figure 5,2.0,Times New Roman,11.0,1,1
+Figure 5,2.5,Times New Roman,11.0,1,1
+Figure 5,2.5,Times New Roman,11.0,1,1
+Figure 5,Binary64/binary128 order audit,Times New Roman,11.5,1,1
+Figure 5,N1 binary64,Times New Roman,11.0,1,1
+Figure 5,N1 binary128,Times New Roman,11.0,1,1
+Figure 5,N2 binary64,Times New Roman,11.0,1,1
+Figure 5,N2 binary128,Times New Roman,11.0,1,1
+Figure 6,-3.0,Times New Roman,8.5,1,1
+Figure 6,-2.0,Times New Roman,8.5,1,1
+Figure 6,-2.0,Times New Roman,8.5,1,1
+Figure 6,-2.0,Times New Roman,8.5,1,1
+Figure 6,-3.0,Times New Roman,8.5,1,1
+Figure 6,-2.0,Times New Roman,8.5,1,1
+Figure 6,-2.0,Times New Roman,8.5,1,1
+Figure 6,-3.0,Times New Roman,8.5,1,1
+Figure 6,-2.0,Times New Roman,8.5,1,1
+Figure 6,-2.0,Times New Roman,8.5,1,1
+Figure 6,none,Times New Roman,8.5,1,1
+Figure 6,none,Times New Roman,8.5,1,1
+Figure 6,-2.0,Times New Roman,8.5,1,1
+Figure 6,-3.0,Times New Roman,8.5,1,1
+Figure 6,-2.0,Times New Roman,8.5,1,1
+Figure 6,-2.0,Times New Roman,8.5,1,1
+Figure 6,-2.0,Times New Roman,8.5,1,1
+Figure 6,-3.0,Times New Roman,8.5,1,1
+Figure 6,-2.0,Times New Roman,8.5,1,1
+Figure 6,-3.0,Times New Roman,8.5,1,1
+Figure 6,-3.0,Times New Roman,8.5,1,1
+Figure 6,-2.0,Times New Roman,8.5,1,1
+Figure 6,-2.0,Times New Roman,8.5,1,1
+Figure 6,-2.0,Times New Roman,8.5,1,1
+Figure 6,none,Times New Roman,8.5,1,1
+Figure 6,-2.0,Times New Roman,8.5,1,1
+Figure 6,(a),Times New Roman,12.0,1,1
+Figure 6,Base,Times New Roman,8.5,1,1
+Figure 6,Base,Times New Roman,8.5,1,1
+Figure 6,Err 1,Times New Roman,8.5,1,1
+Figure 6,Err 1,Times New Roman,8.5,1,1
+Figure 6,Err 2,Times New Roman,8.5,1,1
+Figure 6,Err 2,Times New Roman,8.5,1,1
+Figure 6,Err 3,Times New Roman,8.5,1,1
+Figure 6,Err 3,Times New Roman,8.5,1,1
+Figure 6,Upd 0,Times New Roman,8.5,1,1
+Figure 6,Upd 0,Times New Roman,8.5,1,1
+Figure 6,Upd 1,Times New Roman,8.5,1,1
+Figure 6,Upd 1,Times New Roman,8.5,1,1
+Figure 6,Orth.,Times New Roman,8.5,1,1
+Figure 6,Orth.,Times New Roman,8.5,1,1
+Figure 6,SVD max,Times New Roman,8.5,1,1
+Figure 6,SVD max,Times New Roman,8.5,1,1
+Figure 6,SVD mid,Times New Roman,8.5,1,1
+Figure 6,SVD mid,Times New Roman,8.5,1,1
+Figure 6,SVD min,Times New Roman,8.5,1,1
+Figure 6,SVD min,Times New Roman,8.5,1,1
+Figure 6,$u$,Times New Roman,8.5,1,1
+Figure 6,$u$,Times New Roman,8.5,1,1
+Figure 6,$p_w$,Times New Roman,8.5,1,1
+Figure 6,$p_w$,Times New Roman,8.5,1,1
+Figure 6,$S_n$,Times New Roman,8.5,1,1
+Figure 6,$S_n$,Times New Roman,8.5,1,1
+Figure 6,N1,Times New Roman,11.0,1,1
+Figure 6,N1,Times New Roman,11.0,1,1
+Figure 6,N2,Times New Roman,11.0,1,1
+Figure 6,N2,Times New Roman,11.0,1,1
+Figure 6,Local-basin entry: 23/26 benchmark-direction pairs,Times New Roman,11.5,1,1
+Figure 6,(b),Times New Roman,12.0,1,1
+Figure 6,N1/U,Times New Roman,11.0,1,1
+Figure 6,N1/U,Times New Roman,11.0,1,1
+Figure 6,N1/P,Times New Roman,11.0,1,1
+Figure 6,N1/P,Times New Roman,11.0,1,1
+Figure 6,N2/P,Times New Roman,11.0,1,1
+Figure 6,N2/P,Times New Roman,11.0,1,1
+Figure 6,energy fraction,Times New Roman,11.0,1,1
+Figure 6,0.0,Times New Roman,11.0,1,1
+Figure 6,0.0,Times New Roman,11.0,1,1
+Figure 6,0.2,Times New Roman,11.0,1,1
+Figure 6,0.2,Times New Roman,11.0,1,1
+Figure 6,0.4,Times New Roman,11.0,1,1
+Figure 6,0.4,Times New Roman,11.0,1,1
+Figure 6,0.6,Times New Roman,11.0,1,1
+Figure 6,0.6,Times New Roman,11.0,1,1
+Figure 6,0.8,Times New Roman,11.0,1,1
+Figure 6,0.8,Times New Roman,11.0,1,1
+Figure 6,1.0,Times New Roman,11.0,1,1
+Figure 6,1.0,Times New Roman,11.0,1,1
+Figure 6,1.2,Times New Roman,11.0,1,1
+Figure 6,1.2,Times New Roman,11.0,1,1
+Figure 6,Mixed subspace evidence,Times New Roman,11.5,1,1
+Figure 6,dominance gate,Times New Roman,11.0,1,1
+Figure 6,bottom-3 dir.,Times New Roman,11.0,1,1
+Figure 6,bottom-3 resp.,Times New Roman,11.0,1,1
+Figure 6,equal-P dir.,Times New Roman,11.0,1,1
+Figure 6,equal-P resp.,Times New Roman,11.0,1,1
+Figure 6,(c),Times New Roman,12.0,1,1
+Figure 6,scaled amplitude,Times New Roman,11.0,1,1
+Figure 6,1e-9,Times New Roman,11.0,1,1
+Figure 6,1e-9,Times New Roman,11.0,1,1
+Figure 6,1e-7,Times New Roman,11.0,1,1
+Figure 6,1e-7,Times New Roman,11.0,1,1
+Figure 6,1e-5,Times New Roman,11.0,1,1
+Figure 6,1e-5,Times New Roman,11.0,1,1
+Figure 6,1e-3,Times New Roman,11.0,1,1
+Figure 6,1e-3,Times New Roman,11.0,1,1
+Figure 6,1e-1,Times New Roman,11.0,1,1
+Figure 6,1e-1,Times New Roman,11.0,1,1
+Figure 6,1e1,Times New Roman,11.0,1,1
+Figure 6,1e1,Times New Roman,11.0,1,1
+Figure 6,nonlinear contribution fraction,Times New Roman,11.0,1,1
+Figure 6,−0.2,Times New Roman,11.0,1,1
+Figure 6,−0.2,Times New Roman,11.0,1,1
+Figure 6,0.0,Times New Roman,11.0,1,1
+Figure 6,0.0,Times New Roman,11.0,1,1
+Figure 6,0.2,Times New Roman,11.0,1,1
+Figure 6,0.2,Times New Roman,11.0,1,1
+Figure 6,0.4,Times New Roman,11.0,1,1
+Figure 6,0.4,Times New Roman,11.0,1,1
+Figure 6,0.6,Times New Roman,11.0,1,1
+Figure 6,0.6,Times New Roman,11.0,1,1
+Figure 6,0.8,Times New Roman,11.0,1,1
+Figure 6,0.8,Times New Roman,11.0,1,1
+Figure 6,1.0,Times New Roman,11.0,1,1
+Figure 6,1.0,Times New Roman,11.0,1,1
+Figure 6,1.2,Times New Roman,11.0,1,1
+Figure 6,1.2,Times New Roman,11.0,1,1
+Figure 6,Nonlinear remainder,Times New Roman,11.5,1,1
+Figure 6,N1/U,Times New Roman,11.0,1,1
+Figure 6,N1/P,Times New Roman,11.0,1,1
+Figure 6,N2/P,Times New Roman,11.0,1,1
+Figure 6,dominance gate,Times New Roman,11.0,1,1
+Figure 6,log10(entry radius),Times New Roman,11.0,1,1
+Figure 6,−4.0,Times New Roman,11.0,1,1
+Figure 6,−4.0,Times New Roman,11.0,1,1
+Figure 6,−3.5,Times New Roman,11.0,1,1
+Figure 6,−3.5,Times New Roman,11.0,1,1
+Figure 6,−3.0,Times New Roman,11.0,1,1
+Figure 6,−3.0,Times New Roman,11.0,1,1
+Figure 6,−2.5,Times New Roman,11.0,1,1
+Figure 6,−2.5,Times New Roman,11.0,1,1
+Figure 6,−2.0,Times New Roman,11.0,1,1
+Figure 6,−2.0,Times New Roman,11.0,1,1

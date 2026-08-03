@@ -1,0 +1,10 @@
+figure_id,legend_id,placement,intersects_data_axes
+Figure 3,figure_1,OUTSIDE_LOWER_CENTER,0
+Figure 4,axes_1,BELOW_AXES,0
+Figure 4,axes_2,BELOW_AXES,0
+Figure 4,axes_3,BELOW_AXES,0
+Figure 5,axes_1,BELOW_AXES,0
+Figure 5,axes_3,BELOW_AXES,0
+Figure 5,axes_4,BELOW_AXES,0
+Figure 6,axes_2,BELOW_AXES,0
+Figure 6,axes_3,BELOW_AXES,0

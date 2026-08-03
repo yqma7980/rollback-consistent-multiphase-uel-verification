@@ -1,0 +1,19 @@
+**********************************************************************
+** Visual Studio 2017 Developer Command Prompt v15.9.78
+** Copyright (c) 2017 Microsoft Corporation
+**********************************************************************
+[vcvarsall.bat] Environment initialized for: 'x64'
+:: initializing oneAPI environment...
+   Initializing Visual Studio command-line environment...
+   Visual Studio version 15.9.78 environment configured.
+   "C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\"
+   Visual Studio command-line environment initialized for: 'x64'
+:  compiler -- latest
+:  debugger -- latest
+:  dev-utilities -- latest
+:  dpl -- latest
+:  mpi -- latest
+:  ocloc -- latest
+:  tbb -- latest
+:: oneAPI environment initialized ::
+ifort: remark #10448: Intel(R) Fortran Compiler Classic (ifort) is now deprecated and will be discontinued late 2024. Intel recommends that customers transition now to using the LLVM-based Intel(R) Fortran Compiler (ifx) for continued Windows* and Linux* support, new language support, new language features, and optimizations. Use '/Qdiag-disable:10448' to disable this message.

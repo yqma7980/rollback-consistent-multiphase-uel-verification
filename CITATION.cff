@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this artifact, please cite the archived release and associated manuscript."
+title: "Rollback-consistent multiphase UEL verification artifact"
+version: "0.8.2"
+date-released: 2026-08-03
+authors:
+  - family-names: Sun
+    given-names: Weiji
+    affiliation: "School of Mechanics and Engineering, Liaoning Technical University"
+  - family-names: Ma
+    given-names: Yangqi
+    affiliation: "School of Mechanics and Engineering, Liaoning Technical University"
+  - family-names: Liang
+    given-names: Bing
+    affiliation: "School of Mechanics and Engineering, Liaoning Technical University"
+  - family-names: He
+    given-names: Shi
+    affiliation: "China Coal Research Institute"
+  - family-names: Liang
+    given-names: Bo
+    affiliation: "School of Mechanics and Engineering, Liaoning Technical University"
+license: MIT
+url: "https://doi.org/10.5281/zenodo.21773371"
+repository-code: "https://github.com/yqma7980/rollback-consistent-multiphase-uel-verification"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21773371"

@@ -1,0 +1,3 @@
+# Declaration of generative AI and AI-assisted technologies
+
+During preparation of this work, the authors used a generative AI-assisted tool to support language editing, document structuring, consistency checks, and the drafting and checking of post-processing, figure, packaging, and LaTeX automation scripts. All numerical simulations were executed in the authors' local computational environment; AI-assisted tools were not used to generate, fabricate, or alter scientific data. The authors reviewed and edited all assisted material, verified the source, evidence mappings, figures, and references, and take full responsibility for the article.

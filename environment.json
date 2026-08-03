@@ -1,0 +1,30 @@
+{
+    "package_status":  "PUBLIC_RELEASE_CANDIDATE_SELF_CONTAINED_FIGURE_REBUILD",
+    "manuscript_version":  "v0.8.2",
+    "release_date":  "2026-08-03",
+    "authors":  [
+                    "Weiji Sun",
+                    "Yangqi Ma",
+                    "Bing Liang",
+                    "Shi He",
+                    "Bo Liang"
+                ],
+    "host_solver_for_numerical_generators":  "Abaqus 2026 (licensed; not distributed)",
+    "fortran_compiler":  "Intel Fortran 2021.13",
+    "python":  "3.12.10",
+    "platform_used_for_frozen_outputs":  "Windows",
+    "figure_dependencies":  {
+                                "matplotlib":  "3.10.8",
+                                "numpy":  "2.4.3"
+                            },
+    "figure_rebuild":  "scripts/smoke_test_v082.py",
+    "numerical_rerun_status":  "NOT_PORTABLE_ONE_COMMAND_WORKFLOW",
+    "primary_verified_source":  "src/UEL_TWOPHASE_UPS_PAPER1_REVIEW.for",
+    "primary_verified_source_sha256":  "DCD660846A5BB6498181B94F6F24D5B2D5294FD33D6B0D6C0914983E2B2A85CA",
+    "code_license":  "MIT",
+    "data_documentation_license":  "CC-BY-4.0",
+    "doi_status":  "RESERVED_PENDING_PUBLICATION",
+    "repository_url":  "https://github.com/yqma7980/rollback-consistent-multiphase-uel-verification",
+    "reserved_doi":  "10.5281/zenodo.21773371",
+    "doi_url":  "https://doi.org/10.5281/zenodo.21773371"
+}

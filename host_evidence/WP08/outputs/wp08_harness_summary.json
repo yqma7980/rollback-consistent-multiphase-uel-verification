@@ -1,0 +1,15 @@
+﻿{
+    "schema":  "wp08-lifecycle-harness-summary-v1",
+    "source_sha256":  "DF26D71744945ACD2693FCA95A9CB91713773D6989474C4439DEE196685A7675",
+    "row_count":  7,
+    "required_count":  7,
+    "missing_tests":  [
+
+                      ],
+    "failed_tests":  {
+
+                     },
+    "independent_process_csv_exact":  true,
+    "standalone_scope":  "Direct frozen-UEL call-history replay; not Abaqus host cutback/restart/parallel proof.",
+    "pass":  true
+}

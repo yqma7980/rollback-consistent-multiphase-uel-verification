@@ -1,0 +1,195 @@
+{
+  "status": "PASS",
+  "figure_count": 12,
+  "font_family": "Times New Roman",
+  "normal_text_pt": 11.0,
+  "minimum_text_gate_pt": 8,
+  "minimum_text_observed_pt": 8.5,
+  "legend_policy": "OUTSIDE_DATA_AXES",
+  "legend_overlap_count": 0,
+  "tick_overlap_pair_count": 0,
+  "tick_outside_figure_count": 52,
+  "source_manifest_rows": 21,
+  "outputs": [
+    {
+      "file": "Figure_S10_frozen_one_step_map.pdf",
+      "sha256": "C2E44507D22DA2C5A53A41BAB5C1E17071BFDD9C73A89F4039B2B03BF5EE10CC",
+      "bytes": 47424
+    },
+    {
+      "file": "Figure_S10_frozen_one_step_map.png",
+      "sha256": "AAA3557783D8B51978E955AADAE0518DCD16BD28057D097373665D10F9201A6A",
+      "bytes": 262959
+    },
+    {
+      "file": "Figure_S10_frozen_one_step_map.svg",
+      "sha256": "E0EACE880152EBBCACBA190FEC98BEC09BF758A801C2ED8FC0D9AA80E966987E",
+      "bytes": 27307
+    },
+    {
+      "file": "Figure_S11_corrected_local_basin.pdf",
+      "sha256": "2BD4FB1B594345BE4FA1508A425D6D2936DD3BEFFEF889EA3D5A64E6AF8D8DA2",
+      "bytes": 63621
+    },
+    {
+      "file": "Figure_S11_corrected_local_basin.png",
+      "sha256": "CDD5A2A5170FE3FD5DE2D7BE6CE220898F3D2645441ACED1BB8A58E85217C8AC",
+      "bytes": 209145
+    },
+    {
+      "file": "Figure_S11_corrected_local_basin.svg",
+      "sha256": "C79B24D2DFC26014E8B5511FA1AA0541951884477424CFABC8AEEA395A4A7A2C",
+      "bytes": 23319
+    },
+    {
+      "file": "Figure_S12_field_subspace_audit.pdf",
+      "sha256": "0E08713030D32A439E8F761086083EA28BFF4475E9D0F1EFFB6F1D8125443AC7",
+      "bytes": 52261
+    },
+    {
+      "file": "Figure_S12_field_subspace_audit.png",
+      "sha256": "3026F56235918E4AE69A81D1C6EAA46488F19481B0036C3DD2C62EDDBC4AFDA3",
+      "bytes": 326368
+    },
+    {
+      "file": "Figure_S12_field_subspace_audit.svg",
+      "sha256": "5E17C9B3302917EB1CCA1DEE5F81F80396E14BBF8AE81E14A5C40C0E2EA03BC7",
+      "bytes": 51940
+    },
+    {
+      "file": "Figure_S1_M1_six_block_baseline.pdf",
+      "sha256": "C9AA600A01F4C155F1AEFC9A7AB7905EA5FB052A66FB1BE0B0CA996016D5B828",
+      "bytes": 53775
+    },
+    {
+      "file": "Figure_S1_M1_six_block_baseline.png",
+      "sha256": "3043389654D1C0BC9C3A9F62BD91E377CEE750B51B3372A2F78A5B70E75C28DF",
+      "bytes": 549825
+    },
+    {
+      "file": "Figure_S1_M1_six_block_baseline.svg",
+      "sha256": "0CBA5DAB43395340FBC393C2C2CD39100DD621C2D0F51260554E8DE523131EC7",
+      "bytes": 107120
+    },
+    {
+      "file": "Figure_S2_KPU_KSU_corrections.pdf",
+      "sha256": "D4FC5006D57195CC14F33A93DB9E85FE95BB16DF8756A9756F8BD09C5FAEA68A",
+      "bytes": 46084
+    },
+    {
+      "file": "Figure_S2_KPU_KSU_corrections.png",
+      "sha256": "A5641FEC940C04CFA094E232E2098BCABF30A919E14DC6CC56E6195376F9EC5C",
+      "bytes": 281300
+    },
+    {
+      "file": "Figure_S2_KPU_KSU_corrections.svg",
+      "sha256": "054355ADB45B11420B18A7DA0DBF2D2BEBA6127917FCE9AF89899D4B714264EE",
+      "bytes": 36564
+    },
+    {
+      "file": "Figure_S3_mechanics_row_corrections.pdf",
+      "sha256": "8E8DFF61004268A1A37401E0DEB9B1152A4A134690A39A65E8007FD7BBCF22CE",
+      "bytes": 48329
+    },
+    {
+      "file": "Figure_S3_mechanics_row_corrections.png",
+      "sha256": "8C623B775B00DFD8AD8B3EE4A1C4EC35AFCF185BDB725BFF80AF1362E609A4FE",
+      "bytes": 373993
+    },
+    {
+      "file": "Figure_S3_mechanics_row_corrections.svg",
+      "sha256": "8C7C095C95812F1E37CC0B9D7AA45DBD79CA54D10D8C23DFB6B834D1E30318A5",
+      "bytes": 61551
+    },
+    {
+      "file": "Figure_S4_KSS_branch_and_terms.pdf",
+      "sha256": "EB0A8CDEEAAC8B00C43EA88BB6F3E0959C26679BFF449FEE44AD9ACDC6DCAEB8",
+      "bytes": 62808
+    },
+    {
+      "file": "Figure_S4_KSS_branch_and_terms.png",
+      "sha256": "26CBF9246C7F40020320F43A720C066F2335F0683B6566A05BE99C5A2F895165",
+      "bytes": 569086
+    },
+    {
+      "file": "Figure_S4_KSS_branch_and_terms.svg",
+      "sha256": "8AB6CC186536CB63F953FC546E550CEFB54748C290BB7B6858ADC50AD4E3037C",
+      "bytes": 42788
+    },
+    {
+      "file": "Figure_S5_KPP_KSP_separation.pdf",
+      "sha256": "B235A0559F8C1A9E53D73545B65B5AA636FFEDE7FFE132947D35AF9DEB7048BE",
+      "bytes": 58357
+    },
+    {
+      "file": "Figure_S5_KPP_KSP_separation.png",
+      "sha256": "FD6F9F16FA2E661814DDE72348B4EC2523B036C8813C4065EE6779FA8C6EFDE9",
+      "bytes": 466549
+    },
+    {
+      "file": "Figure_S5_KPP_KSP_separation.svg",
+      "sha256": "89A381675047037A32271F2577A60A2971E0250854E8D3A2F8B02C3A44E7BA65",
+      "bytes": 140418
+    },
+    {
+      "file": "Figure_S6_full_matrix_39_series.pdf",
+      "sha256": "C96104FAA4C67DF29BC7C8F271B44B7AD878ECB1B746CEC4E952C7E706F0192A",
+      "bytes": 64559
+    },
+    {
+      "file": "Figure_S6_full_matrix_39_series.png",
+      "sha256": "6736F32E4ADF8F0FE04DFB442154A35D739A9CF8864AD59D1EEB2BA6A7403F77",
+      "bytes": 590220
+    },
+    {
+      "file": "Figure_S6_full_matrix_39_series.svg",
+      "sha256": "2CE9A4A8058AD26DA06DB3BD45B266F6A006F36C3CC1E35347BD0E307EEB0CC9",
+      "bytes": 82897
+    },
+    {
+      "file": "Figure_S7_active_set_component_closure.pdf",
+      "sha256": "3982677084BEE480D496A635EE3B238E776CFD6A8EDC952B64CDECD61B9E7B9D",
+      "bytes": 51561
+    },
+    {
+      "file": "Figure_S7_active_set_component_closure.png",
+      "sha256": "25597CA0A68E70646A31158EF7EE8DC343B9B4E686F43557E6B8B44A00B5008C",
+      "bytes": 231764
+    },
+    {
+      "file": "Figure_S7_active_set_component_closure.svg",
+      "sha256": "E7C60C5B17CAB931CAF57C1710FF5ABEA351E6E4FE13B0AB782CC9CFFEC6D32E",
+      "bytes": 38499
+    },
+    {
+      "file": "Figure_S8_patch_and_replay.pdf",
+      "sha256": "F322104AD369D6B8776C1DD75D174BF3AC5621221B734E82658B5130FEC5F82C",
+      "bytes": 57183
+    },
+    {
+      "file": "Figure_S8_patch_and_replay.png",
+      "sha256": "6735705A70A912231BABE929194DF3BF582D7FFD10206377904A242C1EB69209",
+      "bytes": 279492
+    },
+    {
+      "file": "Figure_S8_patch_and_replay.svg",
+      "sha256": "6AE6FBEEC02C267F59F1A5A367F1CC3E7A78CEC7EBE9AC362968EFF74E7D9E46",
+      "bytes": 29360
+    },
+    {
+      "file": "Figure_S9_precision_and_order_audit.pdf",
+      "sha256": "34781E735BD91EB4CED762DC912BC1B60E3F60FE43CC553CDF07C2E11DB4E26D",
+      "bytes": 54714
+    },
+    {
+      "file": "Figure_S9_precision_and_order_audit.png",
+      "sha256": "45CCB5D6BC37FD45BDB968196CDE0374FBCAA3F1E2E9006C0DDBCB08DAF36CE9",
+      "bytes": 359683
+    },
+    {
+      "file": "Figure_S9_precision_and_order_audit.svg",
+      "sha256": "28791209760B2948F4B090867967D66AB0C373496F74C22282CCBE58DBFB537F",
+      "bytes": 31666
+    }
+  ]
+}

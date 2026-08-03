@@ -1,0 +1,7 @@
+# Data and code availability - v0.8.2 candidate
+
+Code, data, figure scripts, selected host evidence, and manuscript-supporting files are openly available at https://github.com/yqma7980/rollback-consistent-multiphase-uel-verification and are archived in Zenodo at https://doi.org/10.5281/zenodo.21773371 (DOI: 10.5281/zenodo.21773371).
+
+Release v0.8.2 is self-contained for rebuilding the six main and twelve supplementary figures from distributed CSV inputs. Its SHA-256 manifest covers the byte-preserved UEL snapshot, integrated harness, frozen inputs and evidence, package-relative figure builders, selected repaired-build Abaqus patch material, and manuscript sources. Code is released under the MIT License. Data, documentation, figures, and manuscript-supporting material are released under Creative Commons Attribution 4.0 International.
+
+The archive excludes licensed Abaqus software and does not contain the complete unsafe-versus-repaired Abaqus host replay. Re-running the numerical generators requires licensed Abaqus 2026 and Intel Fortran. Public availability does not establish mesh/time convergence, native full-domain conservation, engineering qualification, universal equal-order stability, or production readiness.

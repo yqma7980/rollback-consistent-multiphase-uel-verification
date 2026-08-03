@@ -1,0 +1,326 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="482.4pt" height="291.6pt" viewBox="0 0 482.4 291.6" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-29T00:00:00+00:00</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 291.6 
+L 482.4 291.6 
+L 482.4 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 15.386628 114.955252 
+L 128.769713 114.955252 
+Q 137.344905 114.955252 137.344905 109.81446 
+L 137.344905 38.98578 
+Q 137.344905 33.844988 128.769713 33.844988 
+L 15.386628 33.844988 
+Q 6.811436 33.844988 6.811436 38.98578 
+L 6.811436 109.81446 
+Q 6.811436 114.955252 15.386628 114.955252 
+z
+" clip-path="url(#paf1ad2ac1d)" style="fill: #e4f1ef; stroke: #16756f; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 177.362464 114.955252 
+L 290.74555 114.955252 
+Q 299.320741 114.955252 299.320741 109.81446 
+L 299.320741 38.98578 
+Q 299.320741 33.844988 290.74555 33.844988 
+L 177.362464 33.844988 
+Q 168.787273 33.844988 168.787273 38.98578 
+L 168.787273 109.81446 
+Q 168.787273 114.955252 177.362464 114.955252 
+z
+" clip-path="url(#paf1ad2ac1d)" style="fill: #eef2f5; stroke: #17324d; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 177.362464 223.483069 
+L 290.74555 223.483069 
+Q 299.320741 223.483069 299.320741 218.342278 
+L 299.320741 150.369592 
+Q 299.320741 145.228801 290.74555 145.228801 
+L 177.362464 145.228801 
+Q 168.787273 145.228801 168.787273 150.369592 
+L 168.787273 218.342278 
+Q 168.787273 223.483069 177.362464 223.483069 
+z
+" clip-path="url(#paf1ad2ac1d)" style="fill: #eef2f5; stroke: #17324d; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 339.338301 114.955252 
+L 467.013372 114.955252 
+Q 475.588564 114.955252 475.588564 109.81446 
+L 475.588564 38.98578 
+Q 475.588564 33.844988 467.013372 33.844988 
+L 339.338301 33.844988 
+Q 330.76311 33.844988 330.76311 38.98578 
+L 330.76311 109.81446 
+Q 330.76311 114.955252 339.338301 114.955252 
+z
+" clip-path="url(#paf1ad2ac1d)" style="fill: #f7e4e1; stroke: #b2453d; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 339.338301 229.19506 
+L 467.013372 229.19506 
+Q 475.588564 229.19506 475.588564 224.054268 
+L 475.588564 144.657602 
+Q 475.588564 139.516811 467.013372 139.516811 
+L 339.338301 139.516811 
+Q 330.76311 139.516811 330.76311 144.657602 
+L 330.76311 224.054268 
+Q 330.76311 229.19506 339.338301 229.19506 
+z
+" clip-path="url(#paf1ad2ac1d)" style="fill: #e4f1ef; stroke: #16756f; stroke-width: 1.1; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 41.112202 287.742961 
+L 441.287798 287.742961 
+Q 447.004593 287.742961 447.004593 284.315767 
+L 447.004593 247.18783 
+Q 447.004593 243.760635 441.287798 243.760635 
+L 41.112202 243.760635 
+Q 35.395407 243.760635 35.395407 247.18783 
+L 35.395407 284.315767 
+Q 35.395407 287.742961 41.112202 287.742961 
+z
+" clip-path="url(#paf1ad2ac1d)" style="fill: #f5f7f8; stroke: #d7dde1; stroke-width: 0.9; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #16756f" x="72.07817" y="63.451307" transform="rotate(-0 72.07817 63.451307)">Committed state</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 11px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #202a33" x="72.07817" y="79.18225" transform="rotate(-0 72.07817 79.18225)">solver-managed SVARS</text>
+   </g>
+   <g id="text_3">
+    <!-- CAP_REF = $C_n$ -->
+    <g style="fill: #202a33" transform="translate(36.82317 93.8753)">
+     <text>
+      <tspan x="0" y="-0.546875" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">C</tspan>
+      <tspan x="7.336914" y="-0.546875" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">A</tspan>
+      <tspan x="15.280762" y="-0.546875" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">P</tspan>
+      <tspan x="21.398438" y="-0.546875" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">_</tspan>
+      <tspan x="26.898438" y="-0.546875" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">R</tspan>
+      <tspan x="34.235352" y="-0.546875" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">E</tspan>
+      <tspan x="40.95459" y="-0.546875" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">F</tspan>
+      <tspan x="47.072266" y="-0.546875" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33"> </tspan>
+      <tspan x="49.822266" y="-0.546875" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">=</tspan>
+      <tspan x="56.025879" y="-0.546875" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33"> </tspan>
+      <tspan x="58.775879" y="-0.546875" style="font-style: italic; font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">C</tspan>
+      <tspan x="66.112793" y="2.178719" style="font-style: italic; font-size: 7.7px; font-family: 'Times New Roman'; fill: #202a33">n</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_4">
+    <!-- accepted $x_n$ -->
+    <g style="fill: #202a33" transform="translate(46.83317 108.946475)">
+     <text>
+      <tspan x="0" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">a</tspan>
+      <tspan x="4.882324" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">c</tspan>
+      <tspan x="9.764648" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">c</tspan>
+      <tspan x="14.646973" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">e</tspan>
+      <tspan x="19.529297" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">p</tspan>
+      <tspan x="25.029297" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">t</tspan>
+      <tspan x="28.085449" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">e</tspan>
+      <tspan x="32.967773" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">d</tspan>
+      <tspan x="38.467773" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33"> </tspan>
+      <tspan x="41.217773" y="-0.359375" style="font-style: italic; font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">x</tspan>
+      <tspan x="46.100098" y="2.366219" style="font-style: italic; font-size: 7.7px; font-family: 'Times New Roman'; fill: #202a33">n</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #17324d" x="234.054007" y="63.451307" transform="rotate(-0 234.054007 63.451307)">Trial A</text>
+   </g>
+   <g id="text_6">
+    <!-- candidate $x_A, C_A$ -->
+    <g style="fill: #202a33" transform="translate(198.139007 79.244125)">
+     <text>
+      <tspan x="0" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">c</tspan>
+      <tspan x="4.882324" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">a</tspan>
+      <tspan x="9.764648" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">n</tspan>
+      <tspan x="15.264648" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">d</tspan>
+      <tspan x="20.764648" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">i</tspan>
+      <tspan x="23.820801" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">d</tspan>
+      <tspan x="29.320801" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">a</tspan>
+      <tspan x="34.203125" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">t</tspan>
+      <tspan x="37.259277" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">e</tspan>
+      <tspan x="42.141602" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33"> </tspan>
+      <tspan x="54.931658" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">,</tspan>
+      <tspan x="44.891602" y="-0.359375" style="font-style: italic; font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">x</tspan>
+      <tspan x="59.270428" y="-0.359375" style="font-style: italic; font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">C</tspan>
+      <tspan x="49.773926" y="2.366219" style="font-style: italic; font-size: 7.7px; font-family: 'Times New Roman'; fill: #202a33">A</tspan>
+      <tspan x="66.607342" y="2.366219" style="font-style: italic; font-size: 7.7px; font-family: 'Times New Roman'; fill: #202a33">A</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_7">
+    <text style="font-size: 11px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #202a33" x="234.054007" y="94.038581" transform="rotate(-0 234.054007 94.038581)">may be rejected</text>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #17324d" x="234.054007" y="174.83512" transform="rotate(-0 234.054007 174.83512)">Trial B</text>
+   </g>
+   <g id="text_9">
+    <text style="font-size: 11px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #202a33" x="234.054007" y="190.566063" transform="rotate(-0 234.054007 190.566063)">same declared input</text>
+   </g>
+   <g id="text_10">
+    <!-- must restart from $C_n$ -->
+    <g style="fill: #202a33" transform="translate(188.954007 205.479113)">
+     <text>
+      <tspan x="0" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">m</tspan>
+      <tspan x="8.556152" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">u</tspan>
+      <tspan x="14.056152" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">s</tspan>
+      <tspan x="18.336914" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">t</tspan>
+      <tspan x="21.393066" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33"> </tspan>
+      <tspan x="24.143066" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">r</tspan>
+      <tspan x="27.806152" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">e</tspan>
+      <tspan x="32.688477" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">s</tspan>
+      <tspan x="36.969238" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">t</tspan>
+      <tspan x="40.025391" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">a</tspan>
+      <tspan x="44.907715" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">r</tspan>
+      <tspan x="48.570801" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">t</tspan>
+      <tspan x="51.626953" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33"> </tspan>
+      <tspan x="54.376953" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">f</tspan>
+      <tspan x="58.040039" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">r</tspan>
+      <tspan x="61.703125" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">o</tspan>
+      <tspan x="67.203125" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">m</tspan>
+      <tspan x="75.759277" y="-0.375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33"> </tspan>
+      <tspan x="78.509277" y="-0.375" style="font-style: italic; font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">C</tspan>
+      <tspan x="85.846191" y="2.350594" style="font-style: italic; font-size: 7.7px; font-family: 'Times New Roman'; fill: #202a33">n</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_11">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #b2453d" x="403.175837" y="63.630995" transform="rotate(-0 403.175837 63.630995)">Unsafe private cache</text>
+   </g>
+   <g id="text_12">
+    <!-- trial writes $C_A$ -->
+    <g style="fill: #202a33" transform="translate(371.825837 79.244125)">
+     <text>
+      <tspan x="0" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">t</tspan>
+      <tspan x="3.056152" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">r</tspan>
+      <tspan x="6.719238" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">i</tspan>
+      <tspan x="9.775391" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">a</tspan>
+      <tspan x="14.657715" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">l</tspan>
+      <tspan x="17.713867" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33"> </tspan>
+      <tspan x="20.463867" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">w</tspan>
+      <tspan x="28.407715" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">r</tspan>
+      <tspan x="32.070801" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">i</tspan>
+      <tspan x="35.126953" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">t</tspan>
+      <tspan x="38.183105" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">e</tspan>
+      <tspan x="43.06543" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">s</tspan>
+      <tspan x="47.346191" y="-0.359375" style="font-size: 11px; font-family: 'Times New Roman'; fill: #202a33"> </tspan>
+      <tspan x="50.096191" y="-0.359375" style="font-style: italic; font-size: 11px; font-family: 'Times New Roman'; fill: #202a33">C</tspan>
+      <tspan x="57.433105" y="2.366219" style="font-style: italic; font-size: 7.7px; font-family: 'Times New Roman'; fill: #202a33">A</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 11px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #202a33" x="403.175837" y="94.038581" transform="rotate(-0 403.175837 94.038581)">rejection cannot restore it</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 11.5px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #16756f" x="403.175837" y="169.302817" transform="rotate(-0 403.175837 169.302817)">Solver-managed repair</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 11px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #202a33" x="403.175837" y="184.854072" transform="rotate(-0 403.175837 184.854072)">candidate remains in</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 11px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #202a33" x="403.175837" y="199.705247" transform="rotate(-0 403.175837 199.705247)">solver-managed SVARS</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 11px; font-family: 'Times New Roman', serif; text-anchor: middle; fill: #202a33" x="403.175837" y="214.556422" transform="rotate(-0 403.175837 214.556422)">commit only after acceptance</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 11px; font-family: 'Times New Roman', serif; fill: #202a33" transform="translate(72.11625 262.61697)">Equal-state replay, rejection order, cutback and restart are independent gates;</text>
+    <text style="font-size: 11px; font-family: 'Times New Roman', serif; fill: #202a33" transform="translate(121.593047 274.156314)">the repair is bounded to the identified CAP_REF path.</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 135.629413 74.40012 
+Q 153.066537 74.40012 169.162019 74.40012 
+" clip-path="url(#paf1ad2ac1d)" style="fill: none; stroke: #17324d; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 164.762019 72.20012 
+L 169.162019 74.40012 
+L 164.762019 76.60012 
+z
+" clip-path="url(#paf1ad2ac1d)" style="fill: #17324d; stroke: #17324d; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 234.054007 115.530007 
+Q 234.054007 130.093392 234.054007 143.315135 
+" clip-path="url(#paf1ad2ac1d)" style="fill: none; stroke: #17324d; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 236.254007 138.915135 
+L 234.054007 143.315135 
+L 231.854007 138.915135 
+z
+" clip-path="url(#paf1ad2ac1d)" style="fill: #17324d; stroke: #17324d; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 297.60525 74.40012 
+Q 315.042373 74.40012 331.137856 74.40012 
+" clip-path="url(#paf1ad2ac1d)" style="fill: none; stroke: #b2453d; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 326.737856 72.20012 
+L 331.137856 74.40012 
+L 326.737856 76.60012 
+z
+" clip-path="url(#paf1ad2ac1d)" style="fill: #b2453d; stroke: #b2453d; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 297.60525 184.355935 
+Q 315.042373 184.355935 331.137856 184.355935 
+" clip-path="url(#paf1ad2ac1d)" style="fill: none; stroke: #16756f; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 326.737856 182.155935 
+L 331.137856 184.355935 
+L 326.737856 186.555935 
+z
+" clip-path="url(#paf1ad2ac1d)" style="fill: #16756f; stroke: #16756f; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 403.175837 115.527915 
+Q 403.175837 127.236312 403.175837 137.603069 
+" clip-path="url(#paf1ad2ac1d)" style="fill: none; stroke: #b2453d; stroke-width: 1.2; stroke-linecap: round"/>
+    <path d="M 405.375837 133.203069 
+L 403.175837 137.603069 
+L 400.975837 133.203069 
+z
+" clip-path="url(#paf1ad2ac1d)" style="fill: #b2453d; stroke: #b2453d; stroke-width: 1.2; stroke-linecap: round"/>
+   </g>
+   <g id="text_19">
+    <g id="patch_13">
+     <path d="M 408.78183 133.690797 
+L 467.167767 133.690797 
+L 467.167767 120.781266 
+L 408.78183 120.781266 
+z
+" style="fill: #ffffff"/>
+    </g>
+    <text style="font-weight: 700; font-size: 11px; font-family: 'Times New Roman', serif; text-anchor: start; fill: #b2453d" x="410.32183" y="129.777203" transform="rotate(-0 410.32183 129.777203)">history leak</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="paf1ad2ac1d">
+   <rect x="3.00024" y="3.00024" width="476.39952" height="285.59952"/>
+  </clipPath>
+ </defs>
+</svg>

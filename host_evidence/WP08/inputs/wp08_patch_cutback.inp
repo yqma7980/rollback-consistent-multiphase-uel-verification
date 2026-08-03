@@ -1,0 +1,35 @@
+*Heading
+WP08 M1 2x2 patch - initial 60 s with deterministic PNEWDT cutback to 30 s
+*Include, Input=wp08_patch_model.inc
+*Step, Name=INITIALIZE, Nlgeom=NO, Inc=1
+*Static
+60.0, 60.0, 60.0, 60.0
+*Boundary, Op=NEW
+LEFT, 1, 1, 0.0
+BOTTOM, 2, 2, 0.0
+ALLNODES, 8, 8, 1.0E7
+ALLNODES, 14, 14, 0.10
+*End Step
+*Step, Name=COMMIT_SEED, Nlgeom=NO, Inc=10
+*Static
+60.0, 600.0, 60.0, 60.0
+*Boundary, Op=NEW
+LEFT, 1, 1, 0.0
+BOTTOM, 2, 2, 0.0
+ALLNODES, 8, 8, 1.0E7
+ALLNODES, 14, 14, 0.10
+*End Step
+*Step, Name=REPLAY_CUTBACK, Nlgeom=NO, Inc=16
+*Static
+60.0, 240.0, 30.0, 60.0
+*Boundary, Op=NEW
+LEFT, 1, 1, 0.0
+BOTTOM, 2, 2, 0.0
+LEFT, 8, 8, 1.0E7
+RIGHT, 8, 8, 1.001E7
+LEFT, 14, 14, 0.10
+RIGHT, 14, 14, 0.101
+*Output, Field, Frequency=1
+*Node Output, Nset=ALLNODES
+U, RF
+*End Step

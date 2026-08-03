@@ -1,0 +1,105 @@
+{
+  "status": "PASS",
+  "figure_count": 6,
+  "output_file_count": 18,
+  "minimum_text_size_pt": 8.5,
+  "font_family": "Times New Roman",
+  "font_family_gate": "PASS",
+  "legend_count": 9,
+  "normal_text_target_pt": 11.0,
+  "review_source_width_mm": 170.18,
+  "production_registered_width_mm": 190,
+  "primary_format": "PDF_VECTOR",
+  "outputs": [
+    {
+      "file": "Figure_1_rollback_transaction.pdf",
+      "sha256": "EB8E9BEACE528B70C644FA098AF1D4C5E29D65D6CA19E709CDF9EBA2F9F81A3A",
+      "bytes": 63541
+    },
+    {
+      "file": "Figure_1_rollback_transaction.png",
+      "sha256": "B98E68D7C1C4E08C0EF699D5AE80078DE2D70807996FDFE442A8D6D9CC8E5108",
+      "bytes": 382634
+    },
+    {
+      "file": "Figure_1_rollback_transaction.svg",
+      "sha256": "5059F9CED7A5889985255525D1FB0F309EAD3E6746309FEA4E3284AEC53E3FD4",
+      "bytes": 20112
+    },
+    {
+      "file": "Figure_2_traceability.pdf",
+      "sha256": "A9117BAE55CAB285264C3609295FD0D6D27190C5580E95CF965D30E307589BF8",
+      "bytes": 65767
+    },
+    {
+      "file": "Figure_2_traceability.png",
+      "sha256": "6D08F9FAFBB166FDCAE7D9498C625CE09065D11CF9968A50BBB55B2EE233337E",
+      "bytes": 343652
+    },
+    {
+      "file": "Figure_2_traceability.svg",
+      "sha256": "2DC70CF026F6AAAD77C8CFB9AAFD068AC1FE917B8BAF2442B92C84A0229904EA",
+      "bytes": 17181
+    },
+    {
+      "file": "Figure_3_block_corrections.pdf",
+      "sha256": "C26096F7FBC0299FD132EBBA8E16B050C1840686E83AE83B7867580F89AE6B40",
+      "bytes": 55514
+    },
+    {
+      "file": "Figure_3_block_corrections.png",
+      "sha256": "7F61F60B4DDD59E621B1EABF0B3A89895C9D07E5F130C22E62AFDB1EC19ABD72",
+      "bytes": 580109
+    },
+    {
+      "file": "Figure_3_block_corrections.svg",
+      "sha256": "F4D6600403DBC59B610376A5C6444AF6D48CB78584067A9242D352164510C5CB",
+      "bytes": 74361
+    },
+    {
+      "file": "Figure_4_jphys_active_set.pdf",
+      "sha256": "678AFAB3CC2F9AD0D45384A1F8ECCE4FD733357821F1942B8D4DE9DA2B20E24C",
+      "bytes": 79316
+    },
+    {
+      "file": "Figure_4_jphys_active_set.png",
+      "sha256": "EEE76B14DEF72A9CFD4DFB7FABEE9DE516CEC9BF68EC7C313EA230314F26B640",
+      "bytes": 475723
+    },
+    {
+      "file": "Figure_4_jphys_active_set.svg",
+      "sha256": "D1A7D25E3922B93370442DC52D398D356D40A636822802BBF4353DA6971B8F6A",
+      "bytes": 52401
+    },
+    {
+      "file": "Figure_5_patch_newton_limits.pdf",
+      "sha256": "96A0429D354C9BF8E9F102D6EE1FD90A6438C645F5857D828EC6040475772CF4",
+      "bytes": 70052
+    },
+    {
+      "file": "Figure_5_patch_newton_limits.png",
+      "sha256": "850F198857E91CD0A1F5B3FD4029458F1A90B219523C28F96362EE13164D0232",
+      "bytes": 597643
+    },
+    {
+      "file": "Figure_5_patch_newton_limits.svg",
+      "sha256": "E3A91847E1015DDFC272E5FCB367C67E7C34721EFB508A98581543546F1A6593",
+      "bytes": 75175
+    },
+    {
+      "file": "Figure_6_basin_subspace.pdf",
+      "sha256": "F7FD2396364B5178E68200089883B5D1B6A299BE7948559A6F3336526F82A0DD",
+      "bytes": 82711
+    },
+    {
+      "file": "Figure_6_basin_subspace.png",
+      "sha256": "3BA28BF6B4259662C4FEF07BF635D5B48E25BF6008B9CC4545CD6943BD64F7C6",
+      "bytes": 510132
+    },
+    {
+      "file": "Figure_6_basin_subspace.svg",
+      "sha256": "71C832CAF4438C2FB14E47BF31505D61B002C3651617B57AF3050B932D722263",
+      "bytes": 71088
+    }
+  ]
+}

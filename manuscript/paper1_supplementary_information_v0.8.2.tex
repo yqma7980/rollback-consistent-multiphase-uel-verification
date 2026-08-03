@@ -1,0 +1,430 @@
+\documentclass[preprint,12pt,authoryear]{elsarticle}
+
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{booktabs,tabularx,array,longtable}
+\usepackage{pdflscape}
+\usepackage{graphicx}
+\usepackage{xurl}
+\usepackage{hyperref}
+\setlength{\emergencystretch}{3em}
+\hypersetup{
+  hidelinks,
+  pdftitle={Supplementary information: rollback-consistent state transactions and auditable verification of an Abaqus multiphase poromechanics user element},
+  pdfauthor={Weiji Sun, Yangqi Ma, Bing Liang, Bo Liang}
+}
+\renewcommand{\thefigure}{S\arabic{figure}}
+\renewcommand{\thetable}{S\arabic{table}}
+
+\journal{Computers and Geotechnics}
+
+\begin{document}
+\begin{frontmatter}
+\title{Supplementary information: rollback-consistent state transactions and auditable verification of an Abaqus multiphase poromechanics user element}
+\author[aff1]{Weiji Sun\corref{cor1}}
+\ead{sunweiji-1231@163.com}
+\author[aff1]{Yangqi Ma}
+\ead{15594667980@163.com}
+\author[aff1]{Bing Liang}
+\ead{lbwqx@163.com}
+\author[aff2]{Shi He}
+\ead{hs_ccteg@163.com}
+\author[aff1]{Bo Liang}
+\ead{15826269106@163.com}
+\cortext[cor1]{Corresponding author. Tel.: +86 139 4182 0145.}
+\affiliation[aff1]{organization={School of Mechanics and Engineering, Liaoning Technical University},
+                   addressline={No. 47 Zhonghua Road},
+                   city={Fuxin},
+                   state={Liaoning},
+                   postcode={123000},
+                   country={China}}
+\affiliation[aff2]{organization={China Coal Research Institute},
+                   city={Beijing},
+                   postcode={100013},
+                   country={China}}
+\end{frontmatter}
+
+\section{Evidence boundary and reproducibility objects}
+
+This supplement reports the complete registered P1 definitions and the negative evidence needed to interpret the main article. It does not add a geotechnical validation problem, mesh or time-step convergence, native balance closure, or a full-domain result. The public v0.8.2 artifact at \url{https://github.com/yqma7980/rollback-consistent-multiphase-uel-verification}, archived under \href{https://doi.org/10.5281/zenodo.21773371}{10.5281/zenodo.21773371}, contains the frozen UEL and standalone harness, input state and direction manifests, preregistrations, complete CSV evidence used in all figures, plotting scripts, and SHA-256 manifests. Code uses the MIT License; data, documentation, figures, and manuscript-supporting material use Creative Commons Attribution 4.0 International.
+
+The global sign convention is
+\begin{equation}
+\mathrm{RHS}=-\mathbf{R},\qquad
+D(\mathrm{RHS})[\mathbf d]\simeq-\mathbf J_{phys}\mathbf d.
+\end{equation}
+The host receives $\mathbf J_{returned}$, while the registered physical-derivative test removes the unpaired matrix guard. No block, state, direction, or perturbation level selects an independent sign.
+
+\section{Complete implementation definition}
+
+\subsection{Parameters and frozen closure choices}
+
+\begin{longtable}{@{}r p{0.20\textwidth} p{0.16\textwidth} p{0.16\textwidth} p{0.30\textwidth}@{}}
+\caption{Complete registered \texttt{PROPS} map.}\label{stab:props}\\
+\toprule
+No. & Symbol or code role & Registered value & Unit & Evidence boundary\\
+\midrule
+\endfirsthead
+\toprule
+No. & Symbol or code role & Registered value & Unit & Evidence boundary\\
+\midrule
+\endhead
+1 & $E$ & $2.50\times10^{10}$ & Pa & isotropic plane-strain elasticity\\
+2 & $\nu$ & 0.300 & -- & isotropic plane-strain elasticity\\
+3 & $\alpha$ & 1.00 & -- & equivalent-pressure coupling\\
+4 & $c_{p,\mathrm{impl}}$ / STORW & $1.00\times10^{-6}$ & Pa$^{-1}$ & implementation-level coefficient; legacy dimensionless comment is metadata error; calibration/sensitivity pending\\
+5 & $\mu_w$ & $1.00\times10^{-3}$ & Pa s & wetting mobility\\
+6 & $\rho_n$ & 700 & kg m$^{-3}$ & non-wetting mass balance\\
+7 & $\mu_n$ & $1.00\times10^{-3}$ & Pa s & non-wetting mobility\\
+8 & $S_{wr}$ & 0.200 & -- & residual wetting saturation\\
+9 & $S_{nr}$ & 0.0500 & -- & residual non-wetting saturation\\
+10 & $p_b$ & $1.00\times10^4$ & Pa & entry-pressure parameter\\
+11 & $\lambda_{BC}$ & 2.00 & -- & Brooks--Corey exponent \citep{brookscorey1964}\\
+12 & $n_w$ & 2.00 & -- & wetting relative-permeability exponent\\
+13 & $n_n$ & 2.00 & -- & non-wetting relative-permeability exponent\\
+14 & $\beta_\phi$ & $1.00\times10^{-2}$ & -- & strain--saturation coupling coefficient\\
+15 & standalone debug seed & 0.100 & -- & no physical role in registered production profile\\
+16 & $K_0$ & $6.00\times10^{-12}$ & m$^2$ & scalar absolute permeability\\
+17 & $\sigma'_0$ & 0 & Pa & permeability reference stress\\
+18 & $a_\sigma$ & 0 or $1.00\times10^{-8}$ & Pa$^{-1}$ & zero in non-stress-sensitive states; nonzero in registered stress-sensitive stages\\
+19 & $CB_0$ & 0 & -- & branch factor reference\\
+20 & $a_{cb}$ & 0 & -- & makes $s_{cb}=1$ in registered profile\\
+21 & $K_{min}$ & $1.00\times10^{-20}$ & m$^2$ & lower hard bound\\
+22 & $K_{max}$ & $1.00\times10^{-8}$ & m$^2$ & upper hard bound\\
+23 & mechanics-state freeze switch & 0 & -- & disabled diagnostic/control\\
+24 & state-writeback freeze switch & 0 & -- & disabled diagnostic/control\\
+25 & mechanics-only compression switch & 0 & -- & disabled diagnostic/control\\
+26 & strict mechanics compression switch & 0 & -- & disabled diagnostic/control\\
+27 & no-writeback compression switch & 0 & -- & disabled diagnostic/control\\
+\bottomrule
+\end{longtable}
+
+The four-node element is plane strain, uses $2\times2$ Gauss integration and unit thickness in the P1 tests, and orders each node as $(u_x,u_y,p_w,S_n)$. The implemented closures are
+\begin{align}
+S_w&=1-S_n,\quad
+S_e=\operatorname{clip}\!\left(\frac{S_w-S_{wr}}{1-S_{wr}-S_{nr}};\varepsilon,1-\varepsilon\right),\\
+p_c&=p_b(S_e^{-1/\lambda_{BC}}-1),\quad
+k_{rw}=S_e^{n_w},\quad k_{rn}=(1-S_e)^{n_n},\\
+p_{eq}&=p_w+(1-S_e)p_c,\\
+K_{raw}&=K_0e^{a_\sigma(\sigma'_m-\sigma'_0)}s_{cb},\\
+s_{cb}&=1+a_{cb}(CB_{GP}-CB_0),\\
+K&=\operatorname{clip}(K_{raw};K_{min},K_{max}).
+\end{align}
+They are frozen engineering choices, not a thermodynamic derivation or project calibration.
+
+\subsection{Weak residuals and nine-block derivative ledger}
+
+With current trial superscript $k$ and committed beginning-state superscript $n$,
+\begin{align}
+\mathbf R_u &= \int B^T\boldsymbol\sigma'\,d\Omega
+-\int B^T\alpha p_{eq}\mathbf m\,d\Omega,\\
+R_{p,i} &= \int\!\Bigg[
+N_i c_{p,\mathrm{impl}}\frac{p_w^k-p_w^n}{\Delta t}
++N_i\alpha\frac{\varepsilon_v^k-\varepsilon_v^n}{\Delta t}\notag\\
+&\hspace{35mm}+\nabla N_i\!\cdot(\lambda_w\nabla p_w^k)\Bigg]d\Omega,\\
+R_{s,i} &= \int\!\Bigg[
+N_i\phi\rho_n\frac{S_n^{use}-S_n^n}{\Delta t}
++N_i\rho_n\beta_\phi S_n^{use}
+\frac{\varepsilon_v^k-\varepsilon_v^n}{\Delta t}\notag\\
+&\hspace{20mm}+\nabla N_i\!\cdot\Big\{\lambda_n
+[\nabla p_w^k+p_c'(S_n^k)\nabla S_n^k]\Big\}\Bigg]d\Omega.
+\end{align}
+where $\lambda_w=Kk_{rw}/\mu_w$ and $\lambda_n=\rho_nKk_{rn}/\mu_n$. RP is a wetting pressure-storage/volumetric balance and RS is a non-wetting mass balance; their native units differ and direct summation is forbidden.
+
+\begin{landscape}
+\scriptsize
+\begin{longtable}{@{}p{0.055\linewidth}p{0.095\linewidth}p{0.19\linewidth}p{0.275\linewidth}p{0.115\linewidth}p{0.13\linewidth}@{}}
+\caption{Equation-term--routine--block--unit--test traceability ledger.}\label{stab:blocks}\\
+\toprule
+Block & Rows/cols. & Differentiated residual terms & Principal source routines & Native block unit & Verification evidence\\
+\midrule
+\endfirsthead
+\toprule
+Block & Rows/cols. & Differentiated residual terms & Principal source routines & Native block unit & Verification evidence\\
+\midrule
+\endhead
+$K_{uu}$ & $R_u/u$ & effective-stress force & \path{UPS_MECH_CONSTITUTIVE}; \path{UPS_ASSEMBLE_RU_KU} & force/length & mechanics-row FD; affine patch\\
+$K_{up}$ & $R_u/p_w$ & $-B^T\alpha p_{eq}m$ through $\partial p_{eq}/\partial p_w$ & \path{UPS_TWOPHASE_CLOSURE}; \path{UPS_ASSEMBLE_RU_KU} & force/pressure & mechanics-row FD\\
+$K_{us}$ & $R_u/S_n$ & equivalent-pressure saturation derivative & same as $K_{up}$ & force/saturation & branchwise mechanics-row FD\\
+$K_{pu}$ & $R_p/u$ & strain coupling and stress--permeability wetting-flux chain & \path{UPS_RESERVOIR_UPDATE}; \path{UPS_KABS_SIGMA_TO_U}; \path{UPS_ASSEMBLE_RP_KP} & RP/$u$ & stress-sensitive FD\\
+$K_{pp}$ & $R_p/p_w$ & pressure storage and wetting diffusion & \path{UPS_ASSEMBLE_RP_KP} & RP/pressure & physical/numerical separation FD\\
+$K_{ps}$ & $R_p/S_n$ & wetting storage and mobility dependence & closure plus \path{UPS_ASSEMBLE_RP_KP} & RP/saturation & six-block regression FD\\
+$K_{su}$ & $R_s/u$ & strain coupling and stress--permeability non-wetting-flux chain & reservoir and \path{UPS_ASSEMBLE_RS_KS} routines & RS/displacement & stress-sensitive FD\\
+$K_{sp}$ & $R_s/p_w$ & non-wetting pressure-gradient flux & \path{UPS_ASSEMBLE_RS_KS} & RS/pressure & nullspace-aware and non-null FD\\
+$K_{ss}$ & $R_s/S_n$ & storage-use, strain, mobility, $p_c'$, and $p_c''$ terms & closure; \path{UPS_PC_SECOND_DERIVATIVE}; \path{UPS_ASSEMBLE_RS_KS} & RS/saturation & smooth and stable-active-branch FD\\
+\bottomrule
+\end{longtable}
+\end{landscape}
+
+The only unpaired matrix term in the registered profile is $10^{-12}I_{16}$. It is mixed-dimensional in physical coordinates and becomes $W(10^{-12}I_{16})X$ after row/variable scaling. It is not a residual derivative, inf--sup stabilization, conservation device, or bound-preserving scheme.
+
+\subsection{Complete state-slot inventory and host ownership}
+
+The Abaqus UEL interface documents \texttt{SVARS} as solver-managed state for general nonlinear increments and identifies \texttt{KINC=0} as a zero-increment output call \citep{abaqus2026uel}. The registered source assigns 48 slots per Gauss point and 192 per element.
+
+\begin{landscape}
+\footnotesize
+\begin{longtable}{@{}r >{\raggedright\arraybackslash}p{0.14\linewidth}>{\raggedright\arraybackslash}p{0.09\linewidth}>{\raggedright\arraybackslash}p{0.24\linewidth}>{\raggedright\arraybackslash}p{0.41\linewidth}@{}}
+\caption{All 48 Gauss-point state slots.}\label{stab:slots}\\
+\toprule
+Slot & Quantity & Unit & Ownership & Role in registered source\\
+\midrule
+\endfirsthead
+\toprule
+Slot & Quantity & Unit & Ownership & Role in registered source\\
+\midrule
+\endhead
+1 & $p_w$ & Pa & physical/closure candidate & primary reconstruction; physical path \\
+2 & $S_n$ & -- & physical/closure candidate & primary reconstruction; physical path \\
+3 & $S_w$ & -- & physical/closure candidate & closure mirror \\
+4 & $p_c$ & Pa & physical/closure candidate & capillary closure mirror \\
+5 & $p_{eq}$ & Pa & physical/closure candidate & mechanics closure mirror \\
+6 & $\varepsilon_v$ & -- & physical/closure candidate & volumetric-strain history \\
+7 & $\phi$ & -- & physical/closure candidate & porosity mirror \\
+8 & $K$ & m$^2$ & physical/closure candidate & absolute-permeability mirror \\
+9 & $C_f$ & source-defined & physical/closure candidate & capacity value; provenance limited \\
+10 & $\sigma'_{xx}$ & Pa & physical/closure candidate & effective-stress history \\
+11 & $\sigma'_{yy}$ & Pa & physical/closure candidate & effective-stress history \\
+12 & $\sigma'_{xy}$ & Pa & physical/closure candidate & effective-stress history \\
+13 & \path{CAP_REF} & Pa & committed/candidate physical history & authoritative capillary reference \\
+14 & \path{CAP_REF_VALID} & -- & committed/candidate physical history & authoritative validity flag \\
+15 & \path{DBG_DETJ} & m$^2$ & conditional diagnostic candidate & written only under \path{DBG_MECH} \\
+16 & \path{DBG_EPSXX} & -- & conditional diagnostic candidate & written only under \path{DBG_MECH} \\
+17 & \path{DBG_EPSYY} & -- & conditional diagnostic candidate & written only under \path{DBG_MECH} \\
+18 & \path{DBG_GXY} & -- & conditional diagnostic candidate & written only under \path{DBG_MECH} \\
+19 & \path{DBG_SIGXX} & Pa & conditional diagnostic candidate & written only under \path{DBG_MECH} \\
+20 & \path{DBG_SIGYY} & Pa & conditional diagnostic candidate & written only under \path{DBG_MECH} \\
+21 & \path{DBG_SIGXY} & Pa & conditional diagnostic candidate & written only under \path{DBG_MECH} \\
+22 & \path{DBG_SM} & Pa & conditional diagnostic candidate & mean-stress diagnostic \\
+23 & \path{DBG_RU5} & row-dependent & conditional diagnostic candidate & mechanics residual diagnostic \\
+24 & \path{DBG_RU8} & row-dependent & conditional diagnostic candidate & mechanics residual diagnostic \\
+25 & \path{DBG_K55} & entry-specific & conditional diagnostic candidate & matrix-entry diagnostic \\
+26 & \path{DBG_K88} & entry-specific & conditional diagnostic candidate & matrix-entry diagnostic \\
+27 & \path{DBG_K51} & entry-specific & conditional diagnostic candidate & matrix-entry diagnostic \\
+28 & \path{DBG_K55ROW} & entry-specific & conditional diagnostic candidate & matrix-entry diagnostic \\
+29 & \path{DBG_K58} & entry-specific & conditional diagnostic candidate & matrix-entry diagnostic \\
+30 & \path{DBG_K81} & entry-specific & conditional diagnostic candidate & matrix-entry diagnostic \\
+31 & \path{DBG_K85} & entry-specific & conditional diagnostic candidate & matrix-entry diagnostic \\
+32 & \path{DBG_K88ROW} & entry-specific & conditional diagnostic candidate & matrix-entry diagnostic \\
+33 & \path{OUT_PW} & Pa & conditional output mirror & current/core/prior-output source \\
+34 & \path{OUT_SN} & -- & conditional output mirror & current/core/prior-output source \\
+35 & \path{OUT_PC} & Pa & conditional output mirror & current/core/prior-output source \\
+36 & \path{OUT_PEQ} & Pa & conditional output mirror & current/core/prior-output source \\
+37 & \path{OUT_KABS} & m$^2$ & conditional output mirror & current/core/prior-output source \\
+38 & \path{OUT_EPSV} & -- & conditional output mirror & current/core/prior-output source \\
+39 & \path{OUT_SIGXX} & Pa & conditional output mirror & current/core/prior-output source \\
+40 & \path{OUT_SIGYY} & Pa & conditional output mirror & current/core/prior-output source \\
+41 & \path{OUT_SIGXY} & Pa & conditional output mirror & current/core/prior-output source \\
+42 & \path{OUT_VALID} & -- & output provenance & output-bundle validity \\
+43 & \path{OUT_SOURCE} & -- & output provenance & source identifier \\
+44 & \path{OUT_TIME} & s & output provenance & total-time tag \\
+45 & \path{OUT_KINC} & -- & output provenance & increment tag \\
+46 & reserved & -- & reserved & initialized to zero; no other source reference \\
+47 & reserved & -- & reserved & initialized to zero; no other source reference \\
+48 & reserved & -- & reserved & initialized to zero; no other source reference \\
+\bottomrule
+\end{longtable}
+\normalsize
+\end{landscape}
+
+The source initializes slots 15--48 to zero on each candidate rebuild, then conditionally overwrites slots 15--32 under the mechanics-debug gate and slots 33--45 under the output-source gate. Static source tracing found no use of slots 15--45 in \texttt{RHS}, \texttt{AMATRX}, or the construction of slots 1--14; the machine-readable audit records every read/write anchor. This establishes a static no-reverse-physical-path result, not universal dynamic noninterference. The repair stores CAP\_REF and CAP\_REF\_VALID in slots 13--14. A candidate may be returned during a trial, but no private user-memory commit is authoritative. The tested contract is:
+\begin{enumerate}
+\item equal declared state after clean and permuted rejected histories;
+\item clean versus forced-cutback accepted path;
+\item zero-increment and terminal-call noninterference;
+\item output-on/output-off physical-state parity;
+\item independent-process replay and restart where registered.
+\end{enumerate}
+Only these paths are covered; all-state and all-host-path safety are not claimed.
+
+\section{Registered geometry, states, directions, and numerical gates}
+
+\subsection{Single-element and assembled-patch geometry}
+
+The single element has nodes $(0,0)$, $(1,0)$, $(1,1)$, and $(0,1)$. The assembled patch spans $[0,2]\times[0,2]$ with nine nodes and elements $(1,2,5,4)$, $(2,3,6,5)$, $(4,5,8,7)$, and $(5,6,9,8)$. All use four Gauss points, unit thickness, $\Delta t=60$ s, NDOFEL=16, NSVARS=192, PROPS=27, JPROPS=1, and an unsymmetric returned matrix.
+
+The affine single-element states are:
+\noindent $I0$: $u_x=10^{-6}x$, $u_y=-5\times10^{-7}y$,
+$p_w=1.20\times10^7+10^3x+5\times10^2y$, and
+$S_n=0.25+10^{-3}x+5\times10^{-4}y$.
+
+\noindent $I1$: $u_x=10^{-5}x+2\times10^{-6}y$, $u_y=-8\times10^{-6}y$,
+$p_w=1.20\times10^7+2\times10^5x-10^5y$, and
+$S_n=0.30+5\times10^{-3}x$.
+
+\noindent $I2$: $u_x=5\times10^{-4}x+10^{-4}y$,
+$u_y=-3\times10^{-4}y+5\times10^{-5}x$,
+$p_w=1.20\times10^7+2.5\times10^5x-1.5\times10^5y$, and
+$S_n=0.25+0.12x+0.04y$.
+The complete committed 192-slot states are distributed in \path{inputs/wp10_i6_frozen_states.csv} rather than rounded in print.
+
+\subsection{Direction vectors and scales}
+
+The characteristic scales are $X_u=10^{-5}$ m, $X_p=10^7$ Pa, and $X_s=10^{-1}$. Table~\ref{stab:directions} gives the exact scaled components inherited by every registered mixed-direction test; no second normalization, orientation, or sign selection was allowed.
+
+\begin{landscape}
+\scriptsize
+\begin{longtable}{@{}r c rrr@{}}
+\caption{Scaled 16-component mixed directions.}\label{stab:directions}\\
+\toprule
+Local DOF & Field & M1 & M2 & M3\\
+\midrule
+\endfirsthead
+\toprule
+Local DOF & Field & M1 & M2 & M3\\
+\midrule
+\endhead
+1 & $u$ & 0.2041241452319315 & 0.2041241452319315 & 0.08948580545678715 \\
+2 & $u$ & 0.2041241452319315 & -0.2041241452319315 & -0.246215637382763 \\
+3 & $p_w$ & 0.2886751345948129 & 0.2439781005892371 & 0.2886751345948129 \\
+4 & $S_n$ & 0.4458272494941172 & 0.2886751345948129 & 0.2886751345948129 \\
+5 & $u$ & 0.2041241452319315 & 0.2041241452319315 & -0.06251452700161604 \\
+6 & $u$ & 0.2041241452319315 & -0.2041241452319315 & 0.2041594094186132 \\
+7 & $p_w$ & -0.2886751345948129 & 0.2724656467277031 & 0.2886751345948129 \\
+8 & $S_n$ & 0.06155965610544123 & 0.2886751345948129 & -0.2886751345948129 \\
+9 & $u$ & 0.2041241452319315 & 0.2041241452319315 & -0.01191099614095596 \\
+10 & $u$ & 0.2041241452319315 & -0.2041241452319315 & -0.2614054454923604 \\
+11 & $p_w$ & 0.2886751345948129 & 0.09584463572960104 & 0.2886751345948129 \\
+12 & $S_n$ & -0.1602936386585785 & 0.2886751345948129 & 0.2886751345948129 \\
+13 & $u$ & 0.2041241452319315 & 0.2041241452319315 & 0.3874856694133703 \\
+14 & $u$ & 0.2041241452319315 & -0.2041241452319315 & -0.02223804308012635 \\
+15 & $p_w$ & -0.2886751345948129 & 0.4363304904786234 & 0.2886751345948129 \\
+16 & $S_n$ & 0.3241724156797066 & 0.2886751345948129 & -0.2886751345948129 \\
+\bottomrule
+\end{longtable}
+\end{landscape}
+
+\subsection{Perturbations, gates, and nonlinear benchmarks}
+
+\begin{longtable}{@{}p{0.28\textwidth}p{0.64\textwidth}@{}}
+\caption{Frozen numerical gates and benchmark definitions.}\label{stab:gates}\\
+\toprule
+Object & Registered definition\\
+\midrule
+\endfirsthead
+\toprule
+Object & Registered definition\\
+\midrule
+\endhead
+Central-difference levels & $10^{-2},3\times10^{-3},10^{-3},3\times10^{-4},10^{-4},3\times10^{-5},10^{-5},3\times10^{-6},10^{-6},3\times10^{-7},10^{-7}$; all retained\\
+Integrated nonzero derivative & relative $L_2\le10^{-5}$ and cosine $\ge0.99999$\\
+Patch nonzero derivative & relative $L_2\le10^{-8}$ and cosine $\ge0.999999$\\
+Null response & scaled derivative, matrix-vector, and mismatch $L_2/L_\infty\le10^{-10}$\\
+Parity/repeatability & exact when available; otherwise normalized maximum difference $\le10^{-13}$\\
+Branch rule & fixed active branch; branch crossings retained but excluded from smooth claim; branch-distance factor $>10$ where registered\\
+N1 & target I1; direction M2; primary offset 0.75; near offset 0.15\\
+N2 & target I2; direction M3; primary offset 1.00; near offset 0.20\\
+Newton constraints & fixed local DOFs 1,2,3,4,6; free DOFs 5,7,8,9,10,11,12,13,14,15,16; maximum 20 updates\\
+Newton order & at least five residual states; three consecutive $q\ge1.8$; quadratic-constant ratio $\le10$; final residual $\le10^{-12}$; root error $\le10^{-10}$; no globalization or branch crossing\\
+Local-basin amplitudes & 21 values from $10^{-2}$ to $10^{-6}$; fixed bands L2 $[10^{-2},10^{-3}]$, L3 $[10^{-3},10^{-4}]$, L4 $[10^{-4},10^{-5}]$, L5 $[10^{-5},10^{-6}]$\\
+Local-basin order & root and residual OLS slopes in $[1.8,2.2]$, fixed adjacent-slope and quadratic-constant gates, branch and resolution gates, and persistent entry in at least two adjacent registered bands\\
+\bottomrule
+\end{longtable}
+
+\section{Complete supplementary evidence figures}
+
+\begin{figure}[p]
+\centering\includegraphics[width=0.96\textwidth]{supplementary_figures/Figure_S1_M1_six_block_baseline.pdf}
+\caption{Complete M1 six-block baseline finite-difference curves. The baseline contains one consistent block, registered omissions, bounded approximations, a matrix-only pressure mismatch, and a uniform-pressure null response.}
+\end{figure}
+
+\begin{figure}[p]
+\centering\includegraphics[width=0.96\textwidth]{supplementary_figures/Figure_S2_KPU_KSU_corrections.pdf}
+\caption{Stress-dependent permeability-chain corrections for $K_{pu}$ and $K_{su}$ across the retained perturbation levels.}
+\end{figure}
+
+\begin{figure}[p]
+\centering\includegraphics[width=0.96\textwidth]{supplementary_figures/Figure_S3_mechanics_row_corrections.pdf}
+\caption{Mechanics-row derivative evidence for $K_{uu}$, $K_{up}$, and $K_{us}$.}
+\end{figure}
+
+\begin{figure}[p]
+\centering\includegraphics[width=0.96\textwidth]{supplementary_figures/Figure_S4_KSS_branch_and_terms.pdf}
+\caption{Smooth and stable-active-branch $K_{ss}$ evidence and the storage, strain, mobility, first-capillary, and second-capillary derivative closure. Exact switching points are excluded.}
+\end{figure}
+
+\begin{figure}[p]
+\centering\includegraphics[width=0.96\textwidth]{supplementary_figures/Figure_S5_KPP_KSP_separation.pdf}
+\caption{$K_{pp}$ raw/physical/numerical separation and nullspace-aware $K_{sp}$ evidence. The unscaled numerical diagonal is not a dimensional stabilization law.}
+\end{figure}
+
+\begin{figure}[p]
+\centering\includegraphics[width=0.96\textwidth]{supplementary_figures/Figure_S6_full_matrix_39_series.pdf}
+\caption{All 39 registered mixed full-matrix series. The strict binary64 record is 36/39 and remains unchanged.}
+\end{figure}
+
+\begin{figure}[p]
+\centering\includegraphics[width=0.96\textwidth]{supplementary_figures/Figure_S7_active_set_component_closure.pdf}
+\caption{Sixteen-row independent stable-active-set derivative closure for the three lower-clip directions. This supplements but does not rewrite the strict binary64 record.}
+\end{figure}
+
+\begin{figure}[p]
+\centering\includegraphics[width=0.96\textwidth]{supplementary_figures/Figure_S8_patch_and_replay.pdf}
+\caption{Available assembled directional-patch and rollback-replay controls. Term-by-term independent assembly closure and the second complete process were not executed after the Newton-order hard stop.}
+\end{figure}
+
+\begin{figure}[p]
+\centering\includegraphics[width=0.96\textwidth]{supplementary_figures/Figure_S9_precision_and_order_audit.pdf}
+\caption{Binary64/binary128 residual-floor and empirical-order audit. Favorable N2 behavior does not override insufficient N1 evidence.}
+\end{figure}
+
+\begin{figure}[p]
+\centering\includegraphics[width=0.96\textwidth]{supplementary_figures/Figure_S10_frozen_one_step_map.pdf}
+\caption{Frozen one-step-map root and residual slopes. The registered uniformly quadratic criterion was not met.}
+\end{figure}
+
+\begin{figure}[p]
+\centering\includegraphics[width=0.96\textwidth]{supplementary_figures/Figure_S11_corrected_local_basin.pdf}
+\caption{Corrected local-basin map. Persistent entry was observed for 23/26 benchmark--direction combinations; ``no entry'' is retained for the three field-only directions.}
+\end{figure}
+
+\begin{figure}[p]
+\centering\includegraphics[width=0.96\textwidth]{supplementary_figures/Figure_S12_field_subspace_audit.pdf}
+\caption{Projection, singular-subspace, and one-step-decomposition evidence for the three missing field directions. No single mechanism reached the frozen 90\% explanation gate.}
+\end{figure}
+
+\clearpage
+\section{Negative and unresolved evidence retained}
+
+\begin{longtable}{@{}p{0.22\textwidth}p{0.31\textwidth}p{0.39\textwidth}@{}}
+\caption{Negative or incomplete verification outcomes that bound the manuscript claim.}\label{stab:negative}\\
+\toprule
+Evidence layer & Retained outcome & Consequence\\
+\midrule
+\endfirsthead
+\toprule
+Evidence layer & Retained outcome & Consequence\\
+\midrule
+\endhead
+Strict mixed FD & 36/39 binary64 series pass & active-set/binary128 supplement is not reported as 39/39 strict pass\\
+Assembled patch & available run1 directional and replay gates pass & independent term assembly closure, M1/M2 parity, and full run2 were not completed after the hard stop\\
+Newton order & N1 has zero and N2 has two rather than three consecutive eligible $q\ge1.8$ segments & no two-benchmark quadratic-convergence claim\\
+Resolution audit & N2 shows a high-precision local quadratic trend; N1 remains insufficient & no unique resolution-limited explanation\\
+Frozen local map & registered root slopes 0.374 (N1) and 0.318 (N2); residual slopes 1.018 and 1.097 & uniformly quadratic one-step map not observed; cause not localized to a term\\
+Local basin & 23/26 persistent entries & no common radius\\
+Field subspaces & N1/$u$, N1/$p$, N2/$p$ lack a single 90\% explanation & mixed or unresolved; no gauge/null proof\\
+Equal-order Q4 & no inf--sup, checkerboard, mesh/time, maximum-principle, or bound study & field stability and boundedness unestablished\\
+Native balance & RP and RS use different units; accepted-increment boundary flux is unavailable & no total two-phase mass or full-domain conservation claim\\
+Accepted-state output & results-file/context studies stopped on infrastructure/record-semantics gates & no full-domain accepted-state claim; not interpreted as physical failure\\
+\bottomrule
+\end{longtable}
+
+\section{Reproducibility-package layout}
+
+The v0.8 review package is self-contained for figure reconstruction and organized as follows:
+\begin{itemize}
+\item \path{src/}: frozen verified UEL and standalone integrated finite-difference harness;
+\item \path{inputs/}: exact state, direction, branch, constraint, and benchmark manifests;
+\item \path{evidence/}: every CSV consumed by the figure builders, including the seven inputs omitted from v0.7;
+\item \path{preregistration/}: the principal frozen protocols;
+\item \path{scripts/}: package-relative main/supplementary figure builders and an isolated smoke test;
+\item \path{host_evidence/}: available repaired-build WP08 decks, launcher logs, parsed host outputs, and audits;
+\item \path{scripts/}: package-relative main and supplementary figure builders plus the clean-room smoke test;
+\item \path{MANIFEST_SHA256.csv}: relative path, byte count, and SHA-256 for every distributed object.
+\end{itemize}
+
+The figure-rebuild smoke test is executed from a fresh directory with no reference to the author workspace and checks all 54 PDF/SVG/PNG figure outputs against expected hashes. The package does not include Abaqus executables or licensed solver binaries, and the available WP08 host archive lacks the unsafe source and original \texttt{.sta/.msg/.dat} triplet needed for a complete before/after host replay. The public identifiers and licenses improve inspectability but do not upgrade the bounded lifecycle, derivative, convergence, conservation, or engineering-qualification claims.
+
+\bibliographystyle{elsarticle-harv}
+\bibliography{paper1_references_v0.8.2}
+\end{document}

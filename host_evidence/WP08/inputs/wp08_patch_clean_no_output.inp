@@ -1,0 +1,34 @@
+*Heading
+WP08 M1 2x2 patch - fixed 30 s path without host field-output requests
+*Include, Input=wp08_patch_model.inc
+*Step, Name=INITIALIZE, Nlgeom=NO, Inc=1
+*Static
+60.0, 60.0, 60.0, 60.0
+*Boundary, Op=NEW
+LEFT, 1, 1, 0.0
+BOTTOM, 2, 2, 0.0
+ALLNODES, 8, 8, 1.0E7
+ALLNODES, 14, 14, 0.10
+*Restart, Write, Frequency=1
+*End Step
+*Step, Name=COMMIT_SEED, Nlgeom=NO, Inc=10
+*Static
+60.0, 600.0, 60.0, 60.0
+*Boundary, Op=NEW
+LEFT, 1, 1, 0.0
+BOTTOM, 2, 2, 0.0
+ALLNODES, 8, 8, 1.0E7
+ALLNODES, 14, 14, 0.10
+*Restart, Write, Frequency=10
+*End Step
+*Step, Name=REPLAY_FIXED30, Nlgeom=NO, Inc=8
+*Static
+30.0, 240.0, 30.0, 30.0
+*Boundary, Op=NEW
+LEFT, 1, 1, 0.0
+BOTTOM, 2, 2, 0.0
+LEFT, 8, 8, 1.0E7
+RIGHT, 8, 8, 1.001E7
+LEFT, 14, 14, 0.10
+RIGHT, 14, 14, 0.101
+*End Step

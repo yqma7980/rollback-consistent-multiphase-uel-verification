@@ -1,0 +1,4 @@
+Six rollback conditions expose trial-history contamination in a UEL.
+A solver-managed CAP_REF repair removes the identified state path.
+A ledger links equations, code, state slots and nine Jacobian blocks.
+Failed Newton and basin gates remain visible as verification evidence.
