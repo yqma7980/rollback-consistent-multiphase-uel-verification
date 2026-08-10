@@ -1,8 +1,12 @@
 # Rollback-consistent multiphase UEL verification
 
-This repository is the public reproducibility artifact for the manuscript
-“Rollback-consistent state transactions and auditable verification of an
-Abaqus multiphase poromechanics user element.”
+This repository is the public reproducibility artifact for the manuscript:
+
+"State-conditioned residual-Jacobian verification for a nonlinear multiphase
+poromechanics user element"
+
+The archived Zenodo record retains its original artifact title,
+"Rollback-consistent multiphase UEL verification artifact."
 
 ## Persistent identifiers
 
