@@ -8,6 +8,9 @@ poromechanics user element"
 The archived Zenodo record retains its original artifact title,
 "Rollback-consistent multiphase UEL verification artifact."
 
+The manuscript title was revised during development; the archived scientific
+evidence and DOI remain unchanged.
+
 ## Persistent identifiers
 
 - GitHub: https://github.com/yqma7980/rollback-consistent-multiphase-uel-verification
